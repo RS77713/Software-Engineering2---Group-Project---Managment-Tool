@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+client/dist/
+dist-ssr/
+
+# Local database
+server/data.sqlite
+server/data.sqlite-journal
+server/data.sqlite-wal
+server/data.sqlite-shm
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.local

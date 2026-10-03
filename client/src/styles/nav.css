@@ -1,0 +1,184 @@
+/* Shared top navigation — used on every page via App.jsx. The dark bar
+   spans the full viewport width, but its content is capped at the same
+   max-width/padding every page body uses (see test-cases.css,
+   dashboard.css, etc.) so the nav's links line up with the page content
+   below it instead of just hugging the browser edges. */
+.app-header {
+  background: var(--nav-bg, #0f172a);
+  /* Reads as elevated above the page instead of flush with it — same
+     layered-shadow language as every card (index.css's --shadow), just a
+     bespoke value since a nav bar's shadow only needs to fall one way. */
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 4px 16px -4px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.app-header-inner {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+/* Was a text link ("Bootcamp App") — now wraps just the logo image, so
+   this only needs to size/center that image and give the link itself a
+   comfortable click/tap target. */
+.app-brand {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem;
+  border-radius: var(--radius-sm, 8px);
+  transition: background-color 0.15s ease;
+}
+
+.app-brand:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.app-brand-logo {
+  display: block;
+  height: 1.9rem;
+  width: auto;
+}
+
+.app-nav {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* Smaller than before (was 1.4rem) — each link now carries its own
+     0.75rem horizontal padding for the pill shape, which already provides
+     visual separation, so the same large inter-item gap on top of that
+     was pushing the full 9-link row onto two lines at normal desktop
+     widths where it used to fit on one. */
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.app-nav-links a {
+  color: var(--nav-text, #94a3b8);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  /* Trimmed from 0.75rem horizontal — with all 9 links needing to fit in
+     .app-header-inner's existing 60rem cap (matches the page body's own
+     max-width, so nav links stay aligned with the content below), the
+     original pill padding pushed the row onto two lines. */
+  padding: 0.4rem 0.55rem;
+  border-radius: var(--radius-sm, 8px);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.app-nav-links a:hover {
+  color: var(--nav-text-active, #ffffff);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* A filled pill instead of the old underline — --accent-solid rather than
+   --accent, since it's theme-independent and --nav-bg never changes
+   between themes either, so the pill reads identically in light and dark
+   app themes. */
+.app-nav-links a.active {
+  color: var(--nav-text-active, #ffffff);
+  background: color-mix(in srgb, var(--accent-solid, #0f766e) 55%, transparent);
+}
+
+.app-nav-links a.active:hover {
+  background: color-mix(in srgb, var(--accent-solid, #0f766e) 65%, transparent);
+}
+
+/* The hamburger button: hidden entirely on desktop, since the full row
+   of links above is always visible there regardless of menuOpen. */
+.app-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--border-strong, #32405a);
+  border-radius: var(--radius-sm, 8px);
+  flex-shrink: 0;
+}
+
+.app-nav-toggle:hover:not(:disabled) {
+  border-color: var(--accent-solid, #0f766e);
+  color: inherit;
+}
+
+.app-nav-toggle-bar {
+  display: block;
+  width: 1.1rem;
+  height: 2px;
+  background: var(--nav-text-active, #ffffff);
+  border-radius: 1px;
+}
+
+@media (max-width: 768px) {
+  .app-header-inner {
+    flex-wrap: wrap;
+  }
+
+  .app-nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .app-nav-toggle {
+    display: flex;
+  }
+
+  .app-nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem 0 0.75rem;
+  }
+
+  .app-nav-links.open {
+    display: flex;
+    margin-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.4);
+  }
+
+  .app-nav-links a {
+    display: block;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border, #263041);
+    border-left: 3px solid transparent;
+  }
+
+  /* Left-aligned here (not centered like the desktop pill) — every other
+     row in this stacked mobile list is left-aligned text, so a centered
+     icon would be the one row that doesn't line up with the rest. */
+  .app-nav-icon-link {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .app-nav-links li:last-child a {
+    border-bottom: none;
+  }
+
+  .app-nav-links a.active {
+    border-bottom-color: var(--border, #263041);
+    border-left-color: var(--accent-solid, #0f766e);
+    background: color-mix(in srgb, var(--accent-solid, #0f766e) 18%, transparent);
+  }
+}

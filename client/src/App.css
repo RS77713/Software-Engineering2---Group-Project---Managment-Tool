@@ -1,0 +1,137 @@
+.app {
+  max-width: 40rem;
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+/* The hero logo: a clickable link to /dashboard, built from three layered
+   pieces so the continuous "float" animation (on the middle span) and the
+   hover scale/rotate (on the img) never fight over the same element's
+   transform — each animates its own element. */
+.app-hero-logo-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 11rem;
+  height: 11rem;
+  text-decoration: none;
+  border-radius: 50%;
+}
+
+.app-hero-logo-glow {
+  position: absolute;
+  inset: -2.5rem;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--accent, #0f766e), #7e14ff, #47bfff, var(--accent, #0f766e));
+  filter: blur(2.75rem);
+  opacity: 0.55;
+  animation: app-hero-spin 9s linear infinite, app-hero-pulse 3.4s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+}
+
+.app-hero-logo-float {
+  position: relative;
+  display: inline-flex;
+  animation: app-hero-float 4.2s ease-in-out infinite;
+}
+
+.app-hero-logo {
+  display: block;
+  width: 7rem;
+  height: 7rem;
+  filter: drop-shadow(0 12px 32px rgba(15, 23, 42, 0.35));
+  transition: transform 0.3s ease;
+}
+
+.app-hero-logo-link:hover .app-hero-logo,
+.app-hero-logo-link:focus-visible .app-hero-logo {
+  transform: scale(1.08) rotate(-4deg);
+}
+
+.app-hero-logo-link:hover .app-hero-logo-glow,
+.app-hero-logo-link:focus-visible .app-hero-logo-glow {
+  opacity: 0.85;
+}
+
+.app-hero-logo-link:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 6px;
+}
+
+.app-hero-hint {
+  margin: 1.75rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+@keyframes app-hero-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes app-hero-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes app-hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.6rem);
+  }
+}
+
+/* Continuous motion off for anyone who's asked for reduced motion — the
+   hover scale/rotate above is a discrete response to input, not a
+   continuous animation, so it stays. */
+@media (prefers-reduced-motion: reduce) {
+  .app-hero-logo-glow,
+  .app-hero-logo-float {
+    animation: none;
+  }
+}
+
+/* What used to be the whole page — now a small footnote below the logo. */
+.app-footer-status {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.app-footer-status h1 {
+  font-size: 1rem;
+  margin: 0 0 0.3rem;
+}
+
+.app-footer-status p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Server-status readout states — loading/success/error for the one live
+   status check this page makes. */
+.status-loading {
+  color: var(--text-muted);
+}
+
+.status-ok {
+  color: var(--color-success);
+}
+
+.status-down {
+  color: var(--color-danger);
+}

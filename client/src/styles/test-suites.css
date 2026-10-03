@@ -1,0 +1,97 @@
+.suite-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.suite-header h1 {
+  margin: 0 0 0.3rem;
+}
+
+.suite-meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: 0.85;
+}
+
+.suite-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.run-creator-input {
+  font: inherit;
+  padding: 0.35rem 0.6rem;
+  width: 8rem;
+}
+
+.suite-edit-form {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--border, #e5e4e7);
+  border-radius: var(--radius-lg, 14px);
+}
+
+.suite-cases-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.suite-case-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border, #e5e4e7);
+  border-radius: var(--radius-sm, 8px);
+  cursor: grab;
+}
+
+.suite-case-row:active {
+  cursor: grabbing;
+}
+
+.drag-handle {
+  opacity: 0.5;
+}
+
+.suite-case-title {
+  flex: 1;
+  min-width: 8rem;
+}
+
+.suite-case-status {
+  font-size: 0.85em;
+  color: var(--text-muted, inherit);
+}
+
+.suite-case-actions {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.add-case-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.add-case-form select {
+  flex: 1;
+  min-width: 12rem;
+  padding: 0.4rem 0.6rem;
+  font: inherit;
+}
