@@ -1,0 +1,27 @@
+Capture metadata (not terminal output)
+Owner: EM
+Run date: 2026-10-30 (Europe/Riga)
+Command: npx --yes --package npm@11.19.1 npm ci
+Node: v24.21.0
+Installation npm: 11.19.1 (task-local); system npm remains 10.8.3
+Command exit status: 0
+Tested application commit: bc304f1d954cb1e55d5ec7cdd06e49bba455613e
+Source: saved original install-npm11.txt and environment.txt
+No paths or warning text changed in the output below.
+This is the later successful installation, not the npm 10 attempt.
+
+added 201 packages, and audited 204 packages in 13s
+
+45 packages are looking for funding
+  run `npm fund` for details
+
+10 vulnerabilities (3 moderate, 4 high, 3 critical)
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
+npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn install-scripts   better-sqlite3@13.0.3 (install: node-gyp rebuild)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.

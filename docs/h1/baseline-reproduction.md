@@ -118,13 +118,37 @@ The compiler failure itself is established by the preserved local error log.
 
 - [Published EM verification evidence](../evidence/em-baseline-evidence.md).
 - [H1 baseline reproduction issue](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/issues/2).
+- [PR #6 and review history](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/6).
+- [Captured npm 10 failure](../evidence/captures/em-2026-10-30/npm10-install.redacted.txt),
+  [npm 11 install and exact warning](../evidence/captures/em-2026-10-30/npm11-install.txt),
+  and [historical audit JSON with package/advisory details](../evidence/captures/em-2026-10-30/npm-audit.json).
 - Raw local results: `docs/evidence/local/2026-10-30/`, including the failed
   install, successful matched-version install, SQLite runtime result, lint,
   full test output, build, startup, HTTP responses and detailed audit.
 - Machine-readable check summary: `local/2026-10-30/checks.json` in that archive.
-- Raw local files are intentionally ignored by Git. The published evidence
-  summary contains selected command results for review; full local artifacts
-  are available from EM on request and are not available through repository links.
+- The complete local archive remains ignored by Git. Selected installation
+  captures and audit data are committed at the links above so reviewers can
+  inspect the reported Windows limitation and audit results.
+
+## Assistance and personal verification
+
+Codex assisted with repository inspection, diagnosing the npm installation
+problem, running the installation/lint/test/build/SQLite/startup/HTTP/audit
+commands through local command tools, preserving their output, and drafting
+this reproduction record and evidence extracts. The automated outcomes in the
+table describe those observed command results.
+
+EM supplied a terminal screenshot showing the active branch, `git rev-parse
+HEAD`, `git rev-list -n 1 part1-baseline` and `node --version`. The captured HEAD
+and baseline SHA match, and Node is `v24.21.0`; the same screenshot records the
+earlier PowerShell block on `npm --version`. This is EM's recorded direct
+environment check. It is separate from the later automated reproduction.
+
+Personal inspection or reruns by EM of the later installation, test, audit and
+HTTP outputs have not been confirmed in this record. Those personal checks and
+the visual browser check remain pending; successful automation alone is not
+recorded as EM's personal verification. MR's independent review is recorded in
+PR #6 and does not claim that MR reproduced the Windows execution.
 
 This record supports H1 baseline discussion with explicit readiness gaps.
 It is not approval of the full H1 deliverable or a release acceptance sign-off.
