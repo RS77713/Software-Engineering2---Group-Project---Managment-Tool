@@ -1,0 +1,23 @@
+Capture metadata (not terminal output)
+Owner: EM
+Recorded execution window: 2026-10-29 to 2026-10-30 (Europe/Riga)
+Command: npm ci
+Node: v24.21.0
+npm: 10.8.3
+Command exit status: 1
+Tested application commit: bc304f1d954cb1e55d5ec7cdd06e49bba455613e
+Source: saved original install-npm10-failed.txt and environment.txt
+Redaction: workspace/user, Visual Studio and Windows system32 prefixes replaced.
+Excerpt: selected original lines; command/version/exit metadata is recorded separately above.
+
+npm error code 1
+npm error path <workspace>\node_modules\better-sqlite3
+npm error command failed
+npm error command <windows-system32>\cmd.exe /d /s /c node-gyp rebuild
+npm error <visual-studio>\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(456,5): error MSB8020: The build tools for ClangCL (Platform Toolset = 'ClangCL') cannot be found. To build using the ClangCL build tools, please install ClangCL build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution". [<workspace>\node_modules\better-sqlite3\build\better_sqlite3.vcxproj]
+npm error <visual-studio>\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(456,5): error MSB8020: The build tools for ClangCL (Platform Toolset = 'ClangCL') cannot be found. To build using the ClangCL build tools, please install ClangCL build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution". [<workspace>\node_modules\better-sqlite3\build\test_extension.vcxproj]
+npm error gyp info using node-gyp@10.2.0
+npm error gyp info using node@24.21.0 | win32 | x64
+npm error gyp ERR! node -v v24.21.0
+npm error gyp ERR! node-gyp -v v10.2.0
+npm error gyp ERR! not ok
