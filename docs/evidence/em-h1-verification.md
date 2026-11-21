@@ -1,6 +1,6 @@
 # EM — H1 contribution and focused verification
 
-**Status:** EM-directed assisted verification and EM's confirmation of the technical explanation recorded; independent assessment of the individual criterion remains pending.
+**Status:** MR assessed EM's documented assisted verification/explanation as satisfactory on 2026-11-21. Overall H1 completeness remains pending the remaining team evidence.
 Owner: EM (`RS77713`). Application checkpoint:
 `e665be8a26e7c746c60e5680a6617766dbeb54b1`. Date: 2026-11-21, Europe/Riga.
 
@@ -42,13 +42,13 @@ The test demonstrates that inherited run creation, result aggregation and invali
 
 After the assisted run, EM was shown a proposed explanation describing successful run creation/result aggregation, invalid-result HTTP 400 rejection, real API/SQLite coverage, and the limits concerning browser behaviour, the planned Bugs feature and dependency security. EM explicitly confirmed review of that explanation. The explanation was prepared with assistance and adopted by EM; it is not presented as a separately authored, unaided answer.
 
-This records a human confirmation of the stated technical interpretation and limits. Earlier personal Home/Dashboard screenshot inspection remains separately confirmed. The latest confirmation does not establish a new manual terminal run, direct inspection of all raw output/source files or independent reproduction without assistance. The reviewer should assess the individual criterion against these actual actions and the linked results; no full H1 acceptance is inferred.
+This records a human confirmation of the stated technical interpretation and limits. Earlier personal Home/Dashboard screenshot inspection remains separately confirmed. The latest confirmation does not establish a new manual terminal run, direct inspection of all raw output/source files or independent reproduction without assistance. No full H1 acceptance is inferred.
 
 ## Independent assessment and reproduction reference
 
-Assisted execution is permitted by the supplied lecturer brief; manually typing each command is not a separate stated requirement. EM's direction of the run and confirmation of the proposed explanation are now recorded. MR must assess whether the stated scope establishes the required personal reproduction/explanation, identifying any specific remaining evidence needed. Do not treat the automated log or the confirmation alone as proof of unrecorded actions.
+MR completed the EM-specific assessment at revision `ee243aad4a2240c4cbbaef20a49df8efd9b9ec46` in [review 6006963120](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/13#pullrequestreview-6006963120). He found no additional EM-specific evidence gap for the documented assisted workflow, assessing the combined human direction, preserved execution evidence and confirmed explanation adoption. He did not independently witness EM's actions or test understanding; that limit remains explicit. This is a COMMENT review, not final approval of the whole H1 submission. No further EM rerun or repeated confirmation is requested for this unchanged scope.
 
-If a direct personal rerun is needed, the existing focused check remains:
+The existing command remains available for reproduction:
 
 ```powershell
 git rev-parse HEAD
