@@ -14,6 +14,11 @@
 
 ## Purpose and inherited functionality
 
+Subsequent update: the historical MR review below was completed in PR #6.
+[The 2026-11-21 readiness follow-up](readiness.md) records a fresh setup repair,
+current audit and agent-observed browser inspection. Original dated results
+below are retained; they do not establish EM's later personal inspection.
+
 Record the actual inherited baseline before implementing Bug management.
 The reachable annotated baseline tag and repository history remain unchanged.
 

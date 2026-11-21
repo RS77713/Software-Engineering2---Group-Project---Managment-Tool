@@ -2,12 +2,12 @@
 
 | Item | Value |
 | --- | --- |
-| Status | Initial design approved by MR; client design confirmed by MK; revised verification coverage awaits MR/BK review |
+| Status | Design revision `8eb48e1` approved by MR and confirmed by BK; MK client decisions confirmed; merged via PR #9 |
 | Owner / reviewer | EM (`RS77713`) / MR (`makss-rivero`) |
 | Branch | `codex/em-h1-architecture` |
 | Issue | [#8: Decide Bug reporting architecture](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/issues/8) |
 | Date | 2026-11-14, Europe/Riga |
-| Updated | 2026-11-21, following BK's verification assessment |
+| Updated | 2026-11-21, after final design review and architecture integration |
 | Inherited baseline | `part1-baseline` -> `bc304f1d954cb1e55d5ec7cdd06e49bba455613e` |
 | Inspected main | `835562e8c2afef0d9f7516ccc520ecfc24047a8a`, after PR #7 |
 
@@ -243,19 +243,24 @@ and permanent annotated tag rather than invent earlier commits.
 - [BK's assessment](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/9#pullrequestreview-6003679534)
   on 2026-11-21 supports the approach and asks for explicit no-match and
   case/source-mismatch coverage. R1 now explicitly names one real browser/API/DB
-  workflow; R3 and R4 include the requested cases. These changes await MR/BK
-  review. BK's assessment is not an approval of executed feature tests.
+  workflow; R3 and R4 include the requested cases. These are future acceptance
+  checks, not executed feature tests.
+- [BK's recheck](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/9#issuecomment-7059489162)
+  confirms R1/R3/R4 at `8eb48e1`; MR's follow-up review approved that exact
+  revision. PR #9 merged at `50ed8fa47aba6434410bd52006ee71f5c2a314a6`.
+  [The readiness follow-up](readiness.md) records subsequent setup/browser/audit
+  work without changing these feature decisions.
 
 Readiness actions before claiming H1 agreement or starting the feature:
 
 | Action | Owner / evidence needed |
 | --- | --- |
-| Review this architecture, scope, versioned migration, transaction and retention decisions | MR approved initial `9113091`; recheck this revision's R1/R3/R4 clarifications and decision-record update against its new SHA. |
+| Review this architecture, scope, versioned migration, transaction and retention decisions | Complete: MR approved `8eb48e1` after reviewing the follow-up diff; review remains in merged PR #9. |
 | Confirm routes, draft lifetime, complete PUT behaviour and lifecycle interface | MK confirmed these decisions at `9113091` in the linked PR comment. That confirmation is separate from the earlier client-alignment approval. |
-| Confirm acceptance coverage and independent verification approach | BK supplied the linked assessment; recheck the added R3/R4 cases and explicit R1 browser/API/database boundary. PR #4 re-review is complete and its documentation is merged. Future verification still requires execution evidence. |
-| Agree reproducible npm/install-script prerequisites | EM coordinates with BK. Propose Node 24 plus npm 11.19.1 as a candidate because EM/MK recorded successful use; it still needs a clean-install script-policy check on supported environments before becoming the setup standard. |
-| Record dependency-advisory remediation or a justified disposition | EM/MR with BK verification; retain dated findings. Different historical warning totals do not establish that issues were fixed. |
-| Complete missing personal/browser baseline inspection | EM: record exactly what was inspected, without substituting automated HTTP output for visual checks. |
+| Confirm acceptance coverage and independent verification approach | Complete: BK confirmed R1/R3/R4 at `8eb48e1`. Future verification still requires execution evidence. |
+| Agree reproducible npm/install-script prerequisites | EM's readiness change pins Node 24/npm 11.19.1 and explicit script denials after fresh Windows verification; MR review and BK's independent platform check remain pending. See readiness issue #10. |
+| Record dependency-advisory remediation or a justified disposition | Dated full/production audits and a proposed isolated-development disposition are in the readiness record; MR review and release-remediation issue #11 remain open. |
+| Complete missing personal/browser baseline inspection | Agent browser inspection/captures are in the readiness record; EM explicitly confirmed personal inspection of the Home/Dashboard screenshots and their displayed results on 2026-11-21. Command runs and other pages retain their agent-observed scope. |
 
 The linked records establish the stated reviews and client confirmation;
 remaining actions are not claims of completed repairs or feature tests.
@@ -266,7 +271,8 @@ and retirement (H6) need their own execution evidence and are not satisfied by
 this architecture document.
 
 Verification scope for this ADR: Codex assisted repository inspection, design
-drafting, review revisions and documentation checks on EM's behalf. MR reviewed
-the initial ADR; review of the current revision remains pending. No new Bug
+drafting, review revisions and documentation checks on EM's behalf. MR approved
+the final design revision and BK confirmed its additions; the later readiness
+change has its own review. No new Bug
 endpoint, migration, client page, security repair or feature
 test was executed by this documentation change.
