@@ -2,11 +2,12 @@
 
 | Item | Value |
 | --- | --- |
-| Status | EM's proposed decision; MR review and the confirmations below are pending |
+| Status | Initial design approved by MR; client design confirmed by MK; revised verification coverage awaits MR/BK review |
 | Owner / reviewer | EM (`RS77713`) / MR (`makss-rivero`) |
 | Branch | `codex/em-h1-architecture` |
 | Issue | [#8: Decide Bug reporting architecture](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/issues/8) |
 | Date | 2026-11-14, Europe/Riga |
+| Updated | 2026-11-21, following BK's verification assessment |
 | Inherited baseline | `part1-baseline` -> `bc304f1d954cb1e55d5ec7cdd06e49bba455613e` |
 | Inspected main | `835562e8c2afef0d9f7516ccc520ecfc24047a8a`, after PR #7 |
 
@@ -99,8 +100,9 @@ decision. Explicit discard or confirmed creation clears the draft. Returning
 from a candidate does not clear it. Do not add browser persistent storage for
 potentially sensitive reproduction text in this increment.
 
-These routes close the client contract's navigation question as an EM proposal;
-MK must confirm them before implementation. Bug detail must omit both source
+MK confirmed these routes and the draft/lifecycle/PUT design in his
+[client decision comment](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/9#issuecomment-6876155071).
+Bug detail must omit both source
 fields from PUT, retain the derived case ID for a source-linked bug, and display
 the server's actual error without inferring a field from its wording. The server
 validates transitions against the current stored status; valid concurrent edits
@@ -168,10 +170,10 @@ remain the detailed scenario sources.
 
 | ID | Observable expectation | Intended verification boundary |
 | --- | --- | --- |
-| R1 | Opening Create Bug sends no POST; valid explicit submission returns a saved bug with the selected result's derived case/run IDs. | Client interaction plus real HTTP/SQLite creation and reopen checks. |
+| R1 | Opening Create Bug sends no POST; valid explicit submission returns a saved bug with the selected result's derived case/run IDs. | One browser-driven workflow against the real client/API and isolated SQLite; check the returned resource, derived IDs and persistence after reopening the database. |
 | R2 | Invalid severity, blank reproduction input, title at 200/201 and assembled description at 5,000/5,001 code points have the documented outcomes; invalid writes change nothing. | Client boundary tests and independent server tests, including non-BMP text. |
-| R3 | A source deleted or changed to non-failed before validation produces 404/409 and no Bug insertion; later source edits retain the original reference. | Real source/Bug HTTP operations against isolated SQLite. |
-| R4 | Double click or keyboard repeat sends one POST; losing a response after commit sends no automatic second POST; paginated reconciliation can find the saved bug while preserving the draft. | Controlled client transport failure after a real commit; include later-page, multiple-candidate and failed-read cases. |
+| R3 | A source deleted or changed to non-failed before validation produces 404/409 and no Bug insertion; creation with a non-null `sourceResultId` plus null or mismatched `testCaseId` returns 400 with no insertion. Later source edits retain the original reference. | Real source/Bug HTTP operations against isolated SQLite, including direct API requests for case/source inconsistency even though the normal client omits `testCaseId`. |
+| R4 | Double click or keyboard repeat sends one POST; losing a response after commit sends no automatic second POST; paginated reconciliation can find the saved bug while preserving the draft. Successful refreshed reads with no identified match retain uncertainty and send no POST until the user explicitly chooses to resubmit after the duplicate-risk explanation. | Controlled client transport failure after a real commit; include later-page, multiple-candidate, failed-read and no-match cases. Verify that the no-match case preserves the draft and sends a further POST only after the explicit user decision. |
 | R5 | Allowed transitions persist; forbidden transitions and invalid complete PUT payloads leave fields/timestamps unchanged. Bug edits do not change existing run totals or test statuses. | Requirement-derived API/state tests with independent before/after reads. |
 | R6 | Suite deletion with a retained source returns 409 with no partial deletion, including after Bug closure; an unreferenced suite still deletes. | Real suite HTTP route and database relationship checks, plus direct SQL restriction checks. |
 | R7 | A baseline database upgrades without changed inherited IDs/rows; second startup is safe; failed/unsupported migrations stop startup safely. | Isolated earlier-data fixture, before/after comparison, reopen and fault checks. |
@@ -229,27 +231,42 @@ and permanent annotated tag rather than invent earlier commits.
   integrated client/API alignment after BK's approval. This is contract review,
   not proof of working Bug pages or confirmation of every API section 9 choice.
 - BK's [PR #4](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/4)
-  is under MK re-review; its evidence is not treated as approved in this ADR.
+  merged after MK's re-review of `bcc4059`, at merge commit
+  `69afa592a471c7f70a9aa57a2bba3eb9a30c1bc6`. Approval covers the documentation
+  corrections and historical evidence; its author-reported fresh run and
+  dependency/install-script limitations remain explicit.
+- [MR's review](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/9#pullrequestreview-5903311776)
+  approved the initial ADR at `9113091` on 2026-11-14 with no blocking findings.
+- [MK's confirmation](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/9#issuecomment-6876155071)
+  on 2026-11-14 confirms client routes, navigation-preserved in-memory drafts,
+  uncertainty handling, lifecycle interface and complete PUT behaviour at `9113091`.
+- [BK's assessment](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/9#pullrequestreview-6003679534)
+  on 2026-11-21 supports the approach and asks for explicit no-match and
+  case/source-mismatch coverage. R1 now explicitly names one real browser/API/DB
+  workflow; R3 and R4 include the requested cases. These changes await MR/BK
+  review. BK's assessment is not an approval of executed feature tests.
 
 Readiness actions before claiming H1 agreement or starting the feature:
 
 | Action | Owner / evidence needed |
 | --- | --- |
-| Review this architecture, scope, versioned migration, transaction and retention decisions | MR: substantive PR review; record requested revisions and the reviewed SHA. |
-| Confirm routes, draft lifetime, complete PUT behaviour and lifecycle interface | MK: explicit decision on the PR. Alignment approval alone does not settle these proposals. |
-| Confirm acceptance coverage and independent verification approach | BK: comment/review against R1-R8 and the contract scenarios; finish PR #4 re-review with MK. |
+| Review this architecture, scope, versioned migration, transaction and retention decisions | MR approved initial `9113091`; recheck this revision's R1/R3/R4 clarifications and decision-record update against its new SHA. |
+| Confirm routes, draft lifetime, complete PUT behaviour and lifecycle interface | MK confirmed these decisions at `9113091` in the linked PR comment. That confirmation is separate from the earlier client-alignment approval. |
+| Confirm acceptance coverage and independent verification approach | BK supplied the linked assessment; recheck the added R3/R4 cases and explicit R1 browser/API/database boundary. PR #4 re-review is complete and its documentation is merged. Future verification still requires execution evidence. |
 | Agree reproducible npm/install-script prerequisites | EM coordinates with BK. Propose Node 24 plus npm 11.19.1 as a candidate because EM/MK recorded successful use; it still needs a clean-install script-policy check on supported environments before becoming the setup standard. |
 | Record dependency-advisory remediation or a justified disposition | EM/MR with BK verification; retain dated findings. Different historical warning totals do not establish that issues were fixed. |
 | Complete missing personal/browser baseline inspection | EM: record exactly what was inspected, without substituting automated HTTP output for visual checks. |
 
-These owners are proposed follow-ups, not claims of approvals or completed
-repairs. Resolve the design decisions and reproducibility prerequisites before
+The linked records establish the stated reviews and client confirmation;
+remaining actions are not claims of completed repairs or feature tests.
+Resolve the remaining design review and reproducibility prerequisites before
 feature scope grows; release acceptance still requires later dependency and
 operational decisions. Rollback/data restoration (H5), post-release maintenance
 and retirement (H6) need their own execution evidence and are not satisfied by
 this architecture document.
 
 Verification scope for this ADR: Codex assisted repository inspection, design
-drafting and documentation checks on EM's behalf. MR's architecture review is
-pending. No new Bug endpoint, migration, client page, security repair or feature
+drafting, review revisions and documentation checks on EM's behalf. MR reviewed
+the initial ADR; review of the current revision remains pending. No new Bug
+endpoint, migration, client page, security repair or feature
 test was executed by this documentation change.
