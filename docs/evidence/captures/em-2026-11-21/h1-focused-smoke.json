@@ -54,7 +54,7 @@
   },
   "isolation": "Existing test uses TEST_DB_PATH pointing to a uniquely named temporary SQLite file directly in os.tmpdir(), with real HTTP and SQLite; closes server/database and removes the owned file and its sidecars.",
   "personalVerification": {
-    "EM": "Home/Dashboard screenshot inspection previously confirmed; this focused command was agent-operated. Personal reproduction and student explanation pending."
+    "EM": "EM requested and directed this assisted verification; command execution was performed by the coding assistant on EM's workspace. Home/Dashboard screenshot inspection previously confirmed. Current human result inspection, own explanation and personal-reproduction criterion remain pending."
   },
   "limitations": [
     "No interactive browser check in this run.",

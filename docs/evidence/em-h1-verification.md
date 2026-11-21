@@ -1,6 +1,6 @@
 # EM — H1 contribution and focused verification
 
-**Status:** recorded automated result; personal reproduction and explanation pending.
+**Status:** EM-directed assisted verification recorded; the personal reproduction/explanation criterion remains pending.
 Owner: EM (`RS77713`). Application checkpoint:
 `e665be8a26e7c746c60e5680a6617766dbeb54b1`. Date: 2026-11-21, Europe/Riga.
 
@@ -10,7 +10,7 @@ Owner: EM (`RS77713`). Application checkpoint:
 - [Readiness PR #12](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/12): pin the installation tools, verify native SQLite and provide supported loopback/fresh-data startup after MR identified a wildcard-binding gap.
 - [Substantive API review](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/3#pullrequestreview-5589588533): identify absent failed-execution identity and the duplicate risk from uncertain POST retries. [Follow-up approval](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/3#pullrequestreview-5729682601) checks their resolution.
 
-These links identify the actual reviewed artifacts and findings. They do not establish a personal command run by EM.
+EM requested and directed this verification through a coding assistant. The work is attributed to EM, with assisted command execution identified separately. The linked artifacts and logs do not by themselves establish which results EM personally inspected or can explain.
 
 ## Reproducible observed result
 
@@ -38,11 +38,13 @@ Git comparison confirms the test, app, database module and run route are unchang
 
 The test demonstrates that inherited run creation, result aggregation and invalid-result rejection work together through the actual API/database boundary. It provides a baseline for the proposed defect-reporting workflow, which depends on identifying a failed result. The invalid-input check verifies the 400 response and error text; it does not independently compare all stored fields before and after rejection. This run does not test a browser, a new Bug implementation, advisory remediation or operational recovery.
 
-The paragraph above is the explanation of the recorded automated check. EM's own explanation and personal reproduction must be recorded separately after they occur. Automated command execution was performed through the coding agent on EM's workspace. EM previously confirmed personal inspection of Home/Dashboard screenshots only; no broader personal run is inferred.
+The paragraph above explains the recorded check. Command execution was assisted on EM's workspace at EM's request; it is part of EM's directed work. EM previously confirmed personal inspection of Home/Dashboard screenshots only. EM's own account of the current results inspected, explanation, decision and limits has not yet been supplied. The personal reproduction/explanation criterion is therefore not marked complete.
 
-## Remaining personal step
+## Remaining human verification
 
-With dependencies available through the documented setup, EM personally runs:
+Assisted execution is permitted by the supplied lecturer brief; manually typing each command is not a separate stated requirement. EM still needs to inspect the relevant source/results, provide an own-words explanation and identify the actual personal actions. Record those facts and let the reviewer assess the personal-reproduction criterion without treating an agent log alone as proof of it.
+
+If a direct personal rerun is needed, the existing focused check remains:
 
 ```powershell
 git rev-parse HEAD
@@ -51,4 +53,4 @@ node --test server/test/test-runs.test.js
 $LASTEXITCODE
 ```
 
-Save actual output and exit code. Record the actual checkout SHA (a documentation-only index revision can differ from the engineering checkpoint). Explain in EM's own words what passed, why the invalid input should fail and what remains unverified. A screenshot can corroborate the run but is not required if attributable command output and explanation are recorded. Do not copy a proposed explanation as a claim of personal verification.
+For any new run, save actual output, exit code and checkout SHA (a documentation-only index revision can differ from the engineering checkpoint). Explain in EM's own words what passed, why the invalid input should fail and what remains unverified. A screenshot can corroborate the evidence but is not required. Do not copy a proposed explanation as a claim of personal verification.
