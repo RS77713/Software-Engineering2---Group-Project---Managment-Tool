@@ -23,17 +23,38 @@ requests, reviews, and automated checks.
 ## Requirements
 
 - Node.js 24
-- npm 10 or newer
+- npm 11.19.1 (also pinned in CI and `package.json`)
 
 Use one Node version consistently when installing and running the project.
 `better-sqlite3` contains a native module and must be installed for the same
-Node version used to start the server.
+Node version used to start the server. Activate npm 11.19.1 with your version
+manager, or install that exact npm version explicitly. Check `node --version`
+and `npm --version` before installing dependencies.
 
 ## Setup
 
 ```bash
 npm ci
+npm run verify:sqlite
 ```
+
+To use the pinned npm without changing the machine's global npm installation:
+
+```bash
+npx --yes --package npm@11.19.1 npm ci
+npx --yes --package npm@11.19.1 npm run verify:sqlite
+```
+
+Use the same `npx --yes --package npm@11.19.1 npm` prefix for the commands below
+when using task-local npm. The engine check rejects unsupported install tools.
+
+Dependency install scripts require an explicit project decision. The locked
+`better-sqlite3` package includes prebuilt binaries; its unnecessary fallback
+compiler script is denied. Optional `fsevents` install scripts are also denied.
+New unreviewed install scripts fail installation. Do not bypass that failure
+with a blanket script approval: review the dependency and run the native probe,
+tests and build after any policy change. A platform without a usable prebuild
+needs a separately reviewed setup rather than an automatic compiler fallback.
 
 ## Development
 
@@ -51,6 +72,7 @@ The Vite development server proxies `/api/*` requests to Express.
 
 ```bash
 npm run lint
+npm run verify:sqlite
 npm test
 npm run build
 ```
@@ -64,6 +86,12 @@ npm start
 
 Express serves the production client build and API from port `3001` by
 default.
+
+Current dependency advisories remain unresolved; this baseline is for isolated
+synthetic-data development/verification. Review
+[the dated readiness record](docs/h1/readiness.md) and
+[release dependency gate #11](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/issues/11)
+before shared/public deployment or release acceptance.
 
 ## Data
 

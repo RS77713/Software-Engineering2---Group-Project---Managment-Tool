@@ -1,0 +1,214 @@
+{
+  "recordedDate": "2026-11-21",
+  "timezone": "Europe/Riga",
+  "owner": "EM",
+  "operator": "Codex acting on EM's request",
+  "startingMain": "50ed8fa47aba6434410bd52006ee71f5c2a314a6",
+  "applicationBaseline": "bc304f1d954cb1e55d5ec7cdd06e49bba455613e",
+  "environment": {
+    "os": "Microsoft Windows 10.0.26300",
+    "node": "v24.21.0",
+    "npmUsed": "11.19.1",
+    "systemNpmUnchanged": "10.8.3",
+    "platform": "win32-x64"
+  },
+  "isolation": {
+    "initialNodeModules": false,
+    "source": "Git archive of starting main plus tested setup file overlay",
+    "database": "Separate synthetic SQLite database in ignored evidence folder",
+    "server": "Real built app via loopback-only listener harness; stopped after inspection",
+    "parentIgnoreFailure": "Initial lint found no files under ignored evidence parent. Own Git boundary added; normal lint rerun passed. Original failure retained locally."
+  },
+  "checks": [
+    {
+      "command": "npx --yes --package npm@11.19.1 npm ci",
+      "exit": 0,
+      "added": 201,
+      "audited": 204
+    },
+    {
+      "command": "npx --yes --package npm@11.19.1 npm install-scripts ls",
+      "exit": 0,
+      "result": "No packages with unreviewed install scripts."
+    },
+    {
+      "command": "npx --yes --package npm@11.19.1 npm run verify:sqlite",
+      "exit": 0,
+      "result": {
+        "sqlite": "3.53.4",
+        "binding": "node_modules/better-sqlite3/prebuilds/win32-x64.node",
+        "writeRead": "passed"
+      }
+    },
+    {
+      "command": "npx --yes --package npm@11.19.1 npm run lint",
+      "exit": 0
+    },
+    {
+      "command": "npx --yes --package npm@11.19.1 npm test",
+      "exit": 0,
+      "client": {
+        "files": 9,
+        "passed": 40
+      },
+      "server": {
+        "passed": 58,
+        "failed": 0
+      },
+      "totalPassed": 98
+    },
+    {
+      "command": "npx --yes --package npm@11.19.1 npm run build",
+      "exit": 0,
+      "vite": "8.3.0",
+      "modules": 53
+    },
+    {
+      "command": "npx --yes --package npm@11.19.1 npm audit --json",
+      "exit": 1,
+      "totals": {
+        "info": 0,
+        "low": 0,
+        "moderate": 3,
+        "high": 4,
+        "critical": 3,
+        "total": 10
+      }
+    },
+    {
+      "command": "npx --yes --package npm@11.19.1 npm audit --omit=dev --json",
+      "exit": 1,
+      "totals": {
+        "info": 0,
+        "low": 0,
+        "moderate": 1,
+        "high": 1,
+        "critical": 1,
+        "total": 3
+      }
+    },
+    {
+      "command": "npx --yes --package npm@11.19.1 npm audit fix --package-lock-only --dry-run --json",
+      "exit": 1,
+      "changed": 0,
+      "note": "No forced upgrade or dependency-version change. Does not establish that repair is impossible."
+    }
+  ],
+  "browser": {
+    "observer": "Codex",
+    "personalInspectionByEM": {
+      "confirmedDate": "2026-11-21",
+      "source": "EM's explicit reply in this chat: I inspected both screenshots and their displayed results.",
+      "scope": [
+        "Home screenshot and displayed results",
+        "Dashboard screenshot and displayed results"
+      ],
+      "limits": "Does not claim personal live navigation, command reruns or inspection of other pages."
+    },
+    "pages": [
+      "Home/logo/status ok",
+      "Dashboard: 5 cases, 2 suites, 1 run, 50% pass rate",
+      "Test Cases: 5",
+      "Test Suites: 2",
+      "Test Runs: 1",
+      "Execution detail: outcomes/notes/controls",
+      "API health: success true, status ok, error null"
+    ],
+    "uiWrites": 0,
+    "limits": "Visual/read navigation only; no exhaustive CRUD, future Bug workflow, keyboard or mobile validation."
+  },
+  "testedFiles": [
+    {
+      "Path": "package.json",
+      "SHA256": "f6f232e80ea7ff7f96e9d912b30f8242dba7d4e2af81d7ef36120deebcef3089",
+      "MatchesWorkspace": true
+    },
+    {
+      "Path": "package-lock.json",
+      "SHA256": "68d286219a13f228849434d9b7bd1c7e2880b6a7b7c384388c3d54dfd73b8562",
+      "MatchesWorkspace": true
+    },
+    {
+      "Path": ".npmrc",
+      "SHA256": "c354ec15fee7f391af9b95c13c96f3f16449132f7125f9fd167adff0a6927ad5",
+      "MatchesWorkspace": true
+    },
+    {
+      "Path": "scripts/verify-sqlite.mjs",
+      "SHA256": "e37197b74930b9d4cdbc52e57121cf2bb2d561eeceb46380dfba1f7ca75d41de",
+      "MatchesWorkspace": true
+    }
+  ],
+  "captures": [
+    {
+      "Name": "api-health.jpg",
+      "SHA256": "afedb5c9068e4bbb02ebcef75128436388a6e95c24556ce7c0f4c8d4aaa158a6"
+    },
+    {
+      "Name": "audit-full.json",
+      "SHA256": "7ccb3e3776730951126e1bab131acd84212c75613507a288196446320616d013"
+    },
+    {
+      "Name": "audit-production.json",
+      "SHA256": "5a03c71bfc792a9c22edc1796e865e1a56d3e0b66b0af215d344586bb404b7f7"
+    },
+    {
+      "Name": "build.txt",
+      "SHA256": "b5a8c3b33df8673e7356c556c892f960b519a8beca240741419223c9cc15e6a9"
+    },
+    {
+      "Name": "dashboard.jpg",
+      "SHA256": "9a9076e8ea3b7f75a25cea3f479be67f9b17e9de2b5cdc2a0b050a5a25ed8e69"
+    },
+    {
+      "Name": "execution.jpg",
+      "SHA256": "dcdfd109b6959cd7fd7e884ca8a0775e3be2f464cced366684674af43197849d"
+    },
+    {
+      "Name": "home.jpg",
+      "SHA256": "4a1a11a2b6bc4b6704b2334346e711ad5b3bb01157bcb37e5f5fb342e74c84b5"
+    },
+    {
+      "Name": "install-pinned.txt",
+      "SHA256": "af6569a96b7d308d87904c9078181479a54157c344de54fea18cdb7648b6158e"
+    },
+    {
+      "Name": "lint.txt",
+      "SHA256": "5232045ff5b276a8b7daaad7c27c78e01c0fdbba7d2d34989d0462beae874a3e"
+    },
+    {
+      "Name": "script-policy.txt",
+      "SHA256": "da02e27d11aeeab4f930e5ee335e68e580547f43ccae954e0227cac9f26bf6e6"
+    },
+    {
+      "Name": "sqlite-runtime.txt",
+      "SHA256": "f37169e4a3e2f4598cd5cec9840a4b11f502fd8565fe613d70479e16c01ef874"
+    },
+    {
+      "Name": "test-cases.jpg",
+      "SHA256": "50c9e656ed9541106f59be96b1e0c8e46513677759ec5725def1ade1156dab45"
+    },
+    {
+      "Name": "test-runs.jpg",
+      "SHA256": "16e3c4de8dfd510f28782717a886496bbee1b9b4d8ff3b35e8248b464d4de852"
+    },
+    {
+      "Name": "test-suites.jpg",
+      "SHA256": "70fc31976792922160c11a07e45ccea52c3c776d9eb118c5aed9c6e322fffd21"
+    },
+    {
+      "Name": "tests.txt",
+      "SHA256": "0c85faf53017c0c717d29c5b381d447aab062b8fb262e34672aca22867d7f27c"
+    }
+  ],
+  "publication": {
+    "encoding": "Text captures normalized to UTF-8 without BOM and LF; extra trailing blank lines trimmed; verification-copy absolute path redacted in tests output. Original raw logs remain local.",
+    "databasePublished": false,
+    "privateChatsPublished": false
+  },
+  "remaining": {
+    "independentSetupReview": "MR/BK",
+    "dependencyGate": "https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/issues/11",
+    "personalInspection": "EM confirmed the Home/Dashboard screenshot scope above; no broader personal verification inferred."
+  }
+}
