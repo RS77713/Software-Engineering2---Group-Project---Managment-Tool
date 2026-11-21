@@ -1,0 +1,111 @@
+
+> qa-management-tool@0.1.0 test
+> npm run test -w client && npm run test -w server
+
+
+> client@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.0 <workspace>/client
+
+
+ Test Files  9 passed (9)
+      Tests  40 passed (40)
+   Start at  11:04:13
+   Duration  5.11s (environment 76%, import 12%, tests 8%, transform 4%)
+
+
+> server@0.1.0 test
+> node --test test/*.test.js
+
+✔ parses a simple header + data rows, unquoted (2.7916ms)
+✔ row numbers start at 2 for the first data row (header is row 1) (0.3061ms)
+✔ a quoted field may contain a comma (0.274ms)
+✔ a quoted field may contain embedded newlines (multiline steps), counted as one row (0.3462ms)
+✔ a doubled quote ("") inside a quoted field is an escaped literal quote (0.2852ms)
+✔ CRLF line endings are handled the same as LF (0.3395ms)
+✔ a leading UTF-8 BOM is stripped, and non-ASCII content is preserved (0.3826ms)
+✔ a file with no trailing newline still captures its last row (0.8317ms)
+✔ fully blank lines are skipped entirely — not counted as a row, and row numbers stay contiguous (0.4002ms)
+✔ a row with a different column count than the header is still returned as-is — the caller decides what to do with it (0.3596ms)
+✔ an unterminated quoted field throws a CsvParseError instead of silently swallowing the rest of the file (0.5691ms)
+✔ a completely empty file throws a CsvParseError (0.1983ms)
+✔ a file containing only blank lines throws a CsvParseError (no header row exists) (0.177ms)
+✔ formatCsvField leaves a plain value unquoted (0.2869ms)
+✔ formatCsvField quotes a value containing a comma, a quote, or a line break, and doubles internal quotes (0.2327ms)
+✔ formatCsvField turns null/undefined into an empty (unquoted) field (0.1398ms)
+✔ stringifyCsv round-trips through parseCsv: commas, quotes, multiline steps, and UTF-8 all survive exactly (0.515ms)
+✔ stringifyCsv with zero rows still produces a valid, parseable header-only document (1.2947ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ an empty database returns stable zero-data dashboard contracts (28.9564ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ dashboard metrics summarize the core workflow (98.3941ms)
+✔ dashboard trends contain pass-rate and every test-case status bucket (8.6827ms)
+✔ isolated startup binds loopback and uses fresh synthetic data despite inherited environment (451.222ms)
+ℹ {"actualBoundAddress":{"address":"127.0.0.1","family":"IPv4","port":56238},"freshSyntheticDatabase":true,"seededCases":5,"inheritedDatabasePreserved":true}
+✔ isolated startup rejects an out-of-range port before starting the application (75.3866ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ PUT /api/suites/:id preserves status when the request omits it (70.4909ms)
+✔ deleting a test case is discoverable as removing it from its suites (54.4618ms)
+✔ an error passed to next() (e.g. malformed JSON) still gets the {success,data,error} shape (12.3487ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ the response is a downloadable text/csv file with a dated filename (37.0472ms)
+✔ headers are exactly the columns requested, in order, and are compatible with CSV import (9.7658ms)
+✔ an empty result set still exports just the header row, as a valid CSV (5.9096ms)
+✔ the export honors the active status filter, matching the list endpoint (61.1007ms)
+✔ the export honors the active search filter, matching the list endpoint (28.7955ms)
+✔ the export honors the current sort/order, matching the list endpoint (severity, ascending) (21.5831ms)
+✔ with no sort param at all, the export defaults to id ascending (creation order, newest last), matching the list default (14.7528ms)
+✔ the export still honors an explicitly chosen updatedAt sort, overriding the id default (18.037ms)
+✔ the export includes every matching row, not just one page worth (beyond PAGE_SIZE=20) (48.9719ms)
+✔ commas, double quotes, multi-line steps, and UTF-8 all survive the export/import round trip exactly (4.1992ms)
+✔ a re-import of the exported CSV recognizes its headers and reports every row as an existing duplicate (6.0256ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ the response envelope follows { success, data, error }, with totalRows/committed/rows/summary (55.3164ms)
+✔ missing csv in the request body is rejected (17.7683ms)
+✔ a header missing any of title/severity/steps/expected_result rejects the whole file, before any row is processed (37.7524ms)
+✔ expected_result is also accepted spelled expectedResult or "expected result" (12.749ms)
+✔ a duplicate header column is rejected as a whole-file error (7.4416ms)
+✔ preview (commit: false) never writes anything, even for an entirely valid file (19.3934ms)
+✔ commit inserts only valid, non-duplicate rows, and the created row matches the CSV (including multi-line steps) (8.0926ms)
+✔ status defaults to draft and preconditions to null when their columns are absent, matching the manual form (7.2865ms)
+✔ a row missing the title-bracket feature area, an invalid severity, or no steps reuses the exact validator messages, unmodified (5.0448ms)
+✔ expected_result: a missing header rejects the whole file, but a present-and-blank cell only invalidates that one row (15.5527ms)
+✔ a structurally malformed file (an unterminated quoted field) is rejected as a whole-file error, and writes nothing (8.2081ms)
+✔ a row with the wrong number of columns is reported as invalid for that row, not silently misaligned (2.7733ms)
+✔ fully blank lines anywhere in the file are skipped — not counted as a row, and not an error (2.1827ms)
+✔ two rows in the same file sharing a title: the first is importable, the second is reported as a duplicate of it and skipped (4.2091ms)
+✔ a title that already exists in the database is reported as a duplicate and skipped, never overwritten (7.6263ms)
+✔ commit re-checks duplicates against live data, not a stale earlier preview (11.5629ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ GET /api/test-cases with no sort/order params at all defaults to id ascending (creation order, newest last) (94.1658ms)
+✔ explicitly sorting by updatedAt (desc) still works exactly as before, overriding the id default (55.269ms)
+✔ explicitly sorting by severity still works exactly as before, overriding the id default (15.9588ms)
+✔ the id default combines correctly with an active status filter (15.2468ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ creating a run snapshots the suite cases (109.0354ms)
+✔ result updates maintain totals and automatically complete the run (24.8266ms)
+✔ invalid execution input returns a useful failure response (4.6729ms)
+ℹ tests 60
+ℹ suites 0
+ℹ pass 60
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 708.2181

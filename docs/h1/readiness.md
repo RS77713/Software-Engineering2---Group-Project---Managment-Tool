@@ -7,8 +7,9 @@
 | Issue | [#10: Baseline setup and readiness](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/issues/10) |
 | Branch | `codex/em-h1-readiness` |
 | Starting main | `50ed8fa47aba6434410bd52006ee71f5c2a314a6`, after architecture PR #9 |
+| Original setup/evidence revision | `fd0078290a1dc3c763f3506071e918bb660b321c`; original captures below remain tied to that run |
 | Application source | Unchanged from `part1-baseline`, `bc304f1d954cb1e55d5ec7cdd06e49bba455613e` |
-| Status | Setup repair and agent verification prepared; EM personally inspected Home/Dashboard screenshots; MR/BK independent review pending |
+| Status | MR's isolated-start finding addressed in the follow-up below; re-review and BK independent verification pending |
 
 ## Architecture integration
 
@@ -96,6 +97,56 @@ it does not establish that EM personally navigated the live app, reran commands
 or inspected every other page. Those results retain their actual agent scope.
 
 ## Evidence and dependency disposition
+
+### MR's startup-boundary finding and supported correction
+
+MR's [review of `fd00782`](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/12#pullrequestreview-6004251451)
+identified one blocking gap: the ordinary start commands omit a bind host and
+can expose the API on all interfaces, while the earlier verification harness
+was not published as a runnable setup path. A localhost URL alone is not a
+network-binding restriction. The original evidence is retained as historical
+observation; it did not prove the normal entry point was isolated.
+
+Use the now-published [isolated launcher](../../scripts/start-isolated.mjs):
+
+```bash
+npm run build
+npm run start:isolated
+```
+
+This starts the real built application at `127.0.0.1:3001`, creates a new
+temporary SQLite database with the existing synthetic seeds on every run, and
+sets its database environment before importing/opening the application.
+Inherited `DB_PATH`, `TEST_DB_PATH` and `HOST` values cannot select a working
+database or broaden the listener. Startup JSON prints `server.address()` and
+the temporary data location. `PORT=0` is supported for automated verification;
+normal use defaults to 3001. Stop with Ctrl+C; retained synthetic data is not
+reused on the next invocation. The README explicitly distinguishes ordinary
+wildcard/working-database starts from this path.
+
+The new [real-process tests](../../server/test/isolated-startup.test.js) check
+the actual IPv4 loopback address and live health/seed responses while hostile
+inherited host/database settings are present. They verify that a sentinel
+working-database file remains unchanged, and reject an out-of-range port before
+application startup. These are new tests for the corrected startup boundary;
+the original 98-test capture and original tested-file hashes remain historical.
+Follow-up Windows checks passed: lint, native SQLite probe, 40 client and 60
+server tests (100 total), and production build. The actual startup address was
+IPv4 `127.0.0.1` on an OS-selected test port, with five synthetic cases and the
+inherited database sentinel preserved. See the
+[follow-up result and file hashes](../evidence/captures/em-2026-11-21/isolated-followup.json)
+and [full regression log with actual address](../evidence/captures/em-2026-11-21/isolated-followup-tests.txt).
+
+The restriction is specifically loopback binding plus a fresh synthetic database.
+It does not provide OS-process isolation, authentication or advisory remediation;
+other local processes can still connect. The release gate remains in force.
+
+MR also reported independent macOS 13.7.8 x86_64 / Node v24.22.1 / npm 11.19.1
+verification of the original setup, native Darwin binding, policy checks and
+98 tests/build in his review. This is attributed to MR and does not replace
+BK's separately assigned reproduction or verify the new launcher on his machine.
+
+### Original setup and browser captures
 
 - [Machine-readable results and hashes](../evidence/captures/em-2026-11-21/verification.json).
 - [SQLite runtime](../evidence/captures/em-2026-11-21/sqlite-runtime.txt),

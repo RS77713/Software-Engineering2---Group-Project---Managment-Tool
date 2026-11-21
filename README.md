@@ -56,7 +56,29 @@ with a blanket script approval: review the dependency and run the native probe,
 tests and build after any policy change. A platform without a usable prebuild
 needs a separately reviewed setup rather than an automatic compiler fallback.
 
-## Development
+## Isolated local demonstration and verification
+
+Use this supported path while the inherited dependency findings remain open:
+
+```bash
+npm run build
+npm run start:isolated
+```
+
+Open `http://127.0.0.1:3001`. The launcher always binds **127.0.0.1**, creates
+a new temporary SQLite database with synthetic seed data on every invocation,
+and ignores inherited `DB_PATH`, `TEST_DB_PATH` and `HOST` values. Startup prints
+the actual bound address/port and temporary database location as JSON. `PORT`
+defaults to 3001; a separately selected free port can be supplied when needed.
+Without a client build, the API is available but the demonstration UI is absent.
+Stop with Ctrl+C. Data remains in the printed temporary directory for inspection;
+it is not reused on the next invocation or written to the working database.
+
+This restricts network binding; it does not add authentication, isolate the
+process from other local processes, or resolve dependency advisories. Use only
+synthetic data and retain the release gate below.
+
+## Ordinary development scripts
 
 ```bash
 npm run dev
@@ -67,6 +89,10 @@ npm run dev
 - Health check: http://localhost:3001/api/health
 
 The Vite development server proxies `/api/*` requests to Express.
+The inherited `npm run dev` API and `npm start` entry point omit a bind host,
+so they can listen on all reachable interfaces despite printing a localhost URL.
+They can also open the configured/default working database. They do not provide
+the isolated setup above; use `npm run start:isolated` for this baseline disposition.
 
 ## Verification
 
@@ -77,7 +103,7 @@ npm test
 npm run build
 ```
 
-## Production
+## Production build and ordinary start
 
 ```bash
 npm run build
@@ -85,7 +111,8 @@ npm start
 ```
 
 Express serves the production client build and API from port `3001` by
-default.
+default. This ordinary start uses the inherited wildcard listener and is not
+the isolated verification command.
 
 Current dependency advisories remain unresolved; this baseline is for isolated
 synthetic-data development/verification. Review

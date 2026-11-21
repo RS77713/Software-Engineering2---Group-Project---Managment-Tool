@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-21",
+  "parentReviewedCommit": "fd0078290a1dc3c763f3506071e918bb660b321c",
+  "finding": "Published isolation disposition lacked a reproducible loopback-only fresh-database launcher.",
+  "setup": {
+    "command": "npm run build && npm run start:isolated",
+    "implementation": "scripts/start-isolated.mjs",
+    "listener": "127.0.0.1 only",
+    "database": "New temporary synthetic SQLite database per invocation; DB_PATH and TEST_DB_PATH inherited values ignored.",
+    "ordinaryScripts": "Inherited wildcard/working-database behaviour explicitly documented separately."
+  },
+  "environment": {
+    "node": "v24.21.0",
+    "npm": "11.19.1",
+    "platform": "Windows x64"
+  },
+  "localVerification": {
+    "lintExit": 0,
+    "nativeSqliteExit": 0,
+    "testExit": 0,
+    "clientPassed": 40,
+    "serverPassed": 60,
+    "totalPassed": 100,
+    "buildExit": 0,
+    "actualStartupObservation": {
+      "actualBoundAddress": {
+        "address": "127.0.0.1",
+        "family": "IPv4",
+        "port": 56238
+      },
+      "freshSyntheticDatabase": true,
+      "seededCases": 5,
+      "inheritedDatabasePreserved": true
+    },
+    "scope": "Real child-process launcher, live HTTP health/seed checks, existing-file sentinel preservation and invalid-port rejection. No new browser/CRUD test or dependency remediation claimed."
+  },
+  "testedFiles": [
+    {
+      "Path": "package.json",
+      "SHA256": "1ed63bae9ae48894eb0f407ce5b9cdf3330ac3e5332e8852193469e8a0af600b"
+    },
+    {
+      "Path": "scripts/start-isolated.mjs",
+      "SHA256": "1fd03354745c795cb5ea3c842b51d7fe513fdb35a9cbfefe0b0431cf02506431"
+    },
+    {
+      "Path": "server/test/isolated-startup.test.js",
+      "SHA256": "84b70dda5a4eaf26281212778b70418d0adcd604fb7ff4e0cafa31f13410a095"
+    }
+  ],
+  "publishedTestLog": {
+    "path": "isolated-followup-tests.txt",
+    "sha256": "60b74f093225968e1a94c39eadfc68213fe9231da258ddd014745444d1dceab8",
+    "normalization": "UTF-8 LF, workspace path redacted, trailing blank lines trimmed; original retained locally."
+  },
+  "existingEvidence": "Original fd00782 setup capture/manifest/screenshot hashes unchanged and remain historical.",
+  "review": "MR re-review and BK independent revision check pending; thread left for reviewer verification."
+}
