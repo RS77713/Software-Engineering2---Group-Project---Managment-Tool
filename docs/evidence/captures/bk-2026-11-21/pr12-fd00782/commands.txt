@@ -1,0 +1,13 @@
+# Commands run from a fresh clone at fd0078290a1dc3c763f3506071e918bb660b321c
+
+Node: v24.20.0
+npm: 11.19.1 via `npx --yes --package npm@11.19.1 npm`
+
+- `npm ci`
+- `npm run verify:sqlite`
+- `npm install-scripts ls`
+- `npm run lint`
+- `npm test`
+- `npm run build`
+
+Logs preserve command stdout/stderr and outcomes. The one machine-specific temp checkout path in test output is redacted as `<fresh-clone>`.

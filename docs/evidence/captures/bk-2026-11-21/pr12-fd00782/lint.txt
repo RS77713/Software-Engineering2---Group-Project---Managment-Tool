@@ -1,0 +1,13 @@
+npm notice run qa-management-tool@0.1.0 npx
+npm notice run 'npm' run lint
+npm warn Unknown env config "global-ignore-file". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> qa-management-tool@0.1.0 lint
+> npm run lint -w client
+
+npm warn Unknown env config "global-ignore-file". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> client@0.0.0 lint
+> oxlint
+
+exit_code=0

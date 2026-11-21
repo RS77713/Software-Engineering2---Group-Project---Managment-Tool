@@ -1,0 +1,10 @@
+Requested revision: fd0078290a1dc3c763f3506071e918bb660b321c
+Fresh clone: /tmp/bk-pr12-fd00782
+Verification date: 2026-11-21 (client date; Europe/Riga)
+OS: Darwin 27.0.0; arm64 (Apple Silicon)
+Node: v24.20.0
+npm: 11.19.1, invoked with `npx --yes --package npm@11.19.1 npm`
+Native binding loaded: node_modules/better-sqlite3/prebuilds/darwin-arm64.node
+SQLite runtime: 3.53.4
+
+The first npx attempt without network permission failed with ENOTFOUND resolving registry.npmjs.org; retry with network permission succeeded. No dependency or project files were changed to work around this.
