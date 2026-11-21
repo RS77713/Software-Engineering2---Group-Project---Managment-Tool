@@ -52,7 +52,7 @@
     "command": "git diff bc304f1d954cb1e55d5ec7cdd06e49bba455613e e665be8a26e7c746c60e5680a6617766dbeb54b1 -- server/app.js server/db.js server/routes/test-runs.js server/test/test-runs.test.js",
     "result": "No differences"
   },
-  "isolation": "Existing test uses TEST_DB_PATH in a unique temporary directory, real HTTP and SQLite; closes server/database and removes owned temporary database files.",
+  "isolation": "Existing test uses TEST_DB_PATH pointing to a uniquely named temporary SQLite file directly in os.tmpdir(), with real HTTP and SQLite; closes server/database and removes the owned file and its sidecars.",
   "personalVerification": {
     "EM": "Home/Dashboard screenshot inspection previously confirmed; this focused command was agent-operated. Personal reproduction and student explanation pending."
   },
