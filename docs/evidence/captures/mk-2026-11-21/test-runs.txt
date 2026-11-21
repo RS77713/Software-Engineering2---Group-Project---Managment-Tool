@@ -1,0 +1,14 @@
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ creating a run snapshots the suite cases (82.810534ms)
+✔ result updates maintain totals and automatically complete the run (11.393668ms)
+✔ invalid execution input returns a useful failure response (8.326621ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 322.700318
