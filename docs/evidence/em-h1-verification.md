@@ -1,6 +1,6 @@
 # EM — H1 contribution and focused verification
 
-**Status:** EM-directed assisted verification recorded; the personal reproduction/explanation criterion remains pending.
+**Status:** EM-directed assisted verification and EM's confirmation of the technical explanation recorded; independent assessment of the individual criterion remains pending.
 Owner: EM (`RS77713`). Application checkpoint:
 `e665be8a26e7c746c60e5680a6617766dbeb54b1`. Date: 2026-11-21, Europe/Riga.
 
@@ -10,7 +10,7 @@ Owner: EM (`RS77713`). Application checkpoint:
 - [Readiness PR #12](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/12): pin the installation tools, verify native SQLite and provide supported loopback/fresh-data startup after MR identified a wildcard-binding gap.
 - [Substantive API review](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/3#pullrequestreview-5589588533): identify absent failed-execution identity and the duplicate risk from uncertain POST retries. [Follow-up approval](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/3#pullrequestreview-5729682601) checks their resolution.
 
-EM requested and directed this verification through a coding assistant. The work is attributed to EM, with assisted command execution identified separately. The linked artifacts and logs do not by themselves establish which results EM personally inspected or can explain.
+EM requested and directed this verification through a coding assistant. The work is attributed to EM, with assisted command execution identified separately. On 2026-11-21 EM confirmed reviewing the proposed technical explanation. The confirmation scope is recorded below; it is not evidence of a separately executed terminal run or inspection of every source file/log.
 
 ## Reproducible observed result
 
@@ -38,11 +38,15 @@ Git comparison confirms the test, app, database module and run route are unchang
 
 The test demonstrates that inherited run creation, result aggregation and invalid-result rejection work together through the actual API/database boundary. It provides a baseline for the proposed defect-reporting workflow, which depends on identifying a failed result. The invalid-input check verifies the 400 response and error text; it does not independently compare all stored fields before and after rejection. This run does not test a browser, a new Bug implementation, advisory remediation or operational recovery.
 
-The paragraph above explains the recorded check. Command execution was assisted on EM's workspace at EM's request; it is part of EM's directed work. EM previously confirmed personal inspection of Home/Dashboard screenshots only. EM's own account of the current results inspected, explanation, decision and limits has not yet been supplied. The personal reproduction/explanation criterion is therefore not marked complete.
+### EM's confirmed explanation review — 2026-11-21
 
-## Remaining human verification
+After the assisted run, EM was shown a proposed explanation describing successful run creation/result aggregation, invalid-result HTTP 400 rejection, real API/SQLite coverage, and the limits concerning browser behaviour, the planned Bugs feature and dependency security. EM explicitly confirmed review of that explanation. The explanation was prepared with assistance and adopted by EM; it is not presented as a separately authored, unaided answer.
 
-Assisted execution is permitted by the supplied lecturer brief; manually typing each command is not a separate stated requirement. EM still needs to inspect the relevant source/results, provide an own-words explanation and identify the actual personal actions. Record those facts and let the reviewer assess the personal-reproduction criterion without treating an agent log alone as proof of it.
+This records a human confirmation of the stated technical interpretation and limits. Earlier personal Home/Dashboard screenshot inspection remains separately confirmed. The latest confirmation does not establish a new manual terminal run, direct inspection of all raw output/source files or independent reproduction without assistance. The reviewer should assess the individual criterion against these actual actions and the linked results; no full H1 acceptance is inferred.
+
+## Independent assessment and reproduction reference
+
+Assisted execution is permitted by the supplied lecturer brief; manually typing each command is not a separate stated requirement. EM's direction of the run and confirmation of the proposed explanation are now recorded. MR must assess whether the stated scope establishes the required personal reproduction/explanation, identifying any specific remaining evidence needed. Do not treat the automated log or the confirmation alone as proof of unrecorded actions.
 
 If a direct personal rerun is needed, the existing focused check remains:
 

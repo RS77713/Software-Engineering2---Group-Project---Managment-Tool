@@ -54,7 +54,13 @@
   },
   "isolation": "Existing test uses TEST_DB_PATH pointing to a uniquely named temporary SQLite file directly in os.tmpdir(), with real HTTP and SQLite; closes server/database and removes the owned file and its sidecars.",
   "personalVerification": {
-    "EM": "EM requested and directed this assisted verification; command execution was performed by the coding assistant on EM's workspace. Home/Dashboard screenshot inspection previously confirmed. Current human result inspection, own explanation and personal-reproduction criterion remain pending."
+    "EM": "EM directed assisted execution and, on 2026-11-21, confirmed review of the proposed technical explanation of the successful checks and limits. Home/Dashboard screenshot inspection separately confirmed. No new manual run, unaided answer or direct inspection of every raw output/source file is inferred; independent assessment of the individual criterion remains pending.",
+    "explanationConfirmation": {
+      "date": "2026-11-21",
+      "scope": "EM confirmed the assisted explanation describing baseline run creation, result aggregation and HTTP 400 invalid-input rejection through real API/SQLite, with browser, new Bug functionality and dependency security excluded.",
+      "explanationAuthorship": "Assisted draft reviewed and adopted by EM",
+      "independentCriterionAssessment": "Pending MR review"
+    }
   },
   "limitations": [
     "No interactive browser check in this run.",
