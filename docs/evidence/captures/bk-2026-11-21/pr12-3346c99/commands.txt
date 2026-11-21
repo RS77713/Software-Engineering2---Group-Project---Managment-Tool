@@ -1,0 +1,15 @@
+# Commands run from fresh clone at 3346c997cbab435d3667c5af7242424a31ee57ab
+
+Node v24.20.0; npm 11.19.1 through `npx --yes --package npm@11.19.1 npm`.
+
+- `npm ci`
+- `npm run verify:sqlite`
+- `npm install-scripts ls`
+- `npm run lint`
+- `npm test`
+- `npm run build`
+- `npm run start:isolated` (after the build; stopped with Ctrl+C)
+- `curl -sS -o home.html -w 'home_http_status=%{http_code}\ncontent_type=%{content_type}\n' http://127.0.0.1:3001/`
+- `curl -sS -w '\nhealth_http_status=%{http_code}\n' http://127.0.0.1:3001/api/health`
+
+Full stdout/stderr and results are in adjacent logs. Machine hostname and temp checkout path are redacted; actual isolated bind and database paths are retained. Earlier fd00782 logs are in the sibling `pr12-fd00782/` directory.

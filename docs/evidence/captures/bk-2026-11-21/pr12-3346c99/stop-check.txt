@@ -1,0 +1,6 @@
+server_status_after_ctrl_c:
+curl: (7) Failed to connect to 127.0.0.1 port 3001 after 0 ms: Couldn't connect to server
+not reachable (stopped)
+database_file_after_stop:
+-rw-r--r--@ 1 $USER  staff  32768 Nov 21 11:38 /var/folders/qd/svj04r_x0ss6sfjx_sbd5v5h0000gn/T/qa-baseline-isolated-UsycyW/synthetic.sqlite
+exit_code=0

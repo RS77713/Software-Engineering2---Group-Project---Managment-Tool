@@ -1,0 +1,11 @@
+commit:
+3346c997cbab435d3667c5af7242424a31ee57ab
+os:
+Darwin [hostname redacted] 27.0.0 Darwin Kernel Version 27.0.0: Tue Aug 11 21:02:57 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8132 arm64
+node:
+v24.20.0
+npm (pinned):
+npm notice run qa-management-tool@0.1.0 npx
+npm notice run 'npm' --version
+11.19.1
+exit_code=0
