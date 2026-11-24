@@ -63,9 +63,15 @@ explanation, and reviewed its claims against the test assertions and route
 implementation. No human execution or personal review is inferred from the
 GitHub account or the fixture's `createdBy: "MK"` value.
 
-MK personal review of this explanation is **pending**; MK must read it and
-confirm their understanding in the PR. BK independent review is **requested**,
-not yet received. Neither review is represented as completed by this record.
+MK has **completed** personal review of this explanation and explicitly
+confirmed understanding of the three test scenarios, their recorded results,
+and the documented limitations. This is MK's personal review, not merely an
+AI-generated review; Codex posted the confirmation at MK's explicit instruction.
+See [MK's personal confirmation](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/15#issuecomment-7133657985).
+
+BK (`bkuvshinnikov`) independently reviewed the evidence and requested MK's
+personal confirmation before approval. BK's re-review of this update remains
+pending; no approval or merge is represented as completed by this record.
 
 ## Saved links
 
