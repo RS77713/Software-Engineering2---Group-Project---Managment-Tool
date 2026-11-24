@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-11-21T21:53:46.124976+00:00",
+  "testedCommit": "e665be8a26e7c746c60e5680a6617766dbeb54b1",
+  "branch": "codex/mk-h1-individual-evidence",
+  "node": "v26.12.1",
+  "npm": "11.20.0",
+  "os": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "osRelease": "PRETTY_NAME=\"Ubuntu 24.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.5 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+  "command": "node --test server/test/test-runs.test.js",
+  "executor": "Codex-assisted execution in MK workspace; not an independent manual MK or BK execution",
+  "dependencies": "Existing node_modules; no install or audit performed",
+  "exitCode": 0,
+  "finishedAt": "2026-11-21T21:53:46.626606+00:00"
+}
