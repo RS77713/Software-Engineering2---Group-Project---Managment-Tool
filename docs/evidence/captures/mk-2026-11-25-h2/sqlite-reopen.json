@@ -1,0 +1,46 @@
+{
+  "databasePath": "/tmp/qa-baseline-isolated-EKbrR2/synthetic.sqlite",
+  "closedServerBeforeReopen": true,
+  "count": 24,
+  "selectedRecords": [
+    {
+      "id": 1,
+      "title": "H2 real UI defect — reviewed details",
+      "description": "Steps: Open reset flow\nExpected: Reset email arrives\nActual: No reset email",
+      "severity": "Major",
+      "status": "open",
+      "test_case_id": 2,
+      "source_result_id": 2,
+      "created_at": "2026-11-25T19:37:49.601Z",
+      "updated_at": "2026-11-25T19:37:49.993Z"
+    },
+    {
+      "id": 2,
+      "title": "H2 committed response lost",
+      "description": "Steps: Submit once\nExpected: Saved response\nActual: Transport interrupted",
+      "severity": "Minor",
+      "status": "open",
+      "test_case_id": 2,
+      "source_result_id": 2,
+      "created_at": "2026-11-25T19:37:50.577Z",
+      "updated_at": "2026-11-25T19:37:50.577Z"
+    },
+    {
+      "id": 24,
+      "title": "H2 no-match explicit resubmission",
+      "description": "Steps: Submit once\nExpected: Report saved\nActual: Connection failed",
+      "severity": "Major",
+      "status": "open",
+      "test_case_id": 2,
+      "source_result_id": 2,
+      "created_at": "2026-11-25T19:37:54.427Z",
+      "updated_at": "2026-11-25T19:37:54.427Z"
+    }
+  ],
+  "foreignKeyCheck": [],
+  "integrityCheck": [
+    {
+      "integrity_check": "ok"
+    }
+  ]
+}
