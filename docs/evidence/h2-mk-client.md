@@ -1,6 +1,6 @@
 # MK H2 Bug client evidence
 
-Client implementation: `91b0de7d1489a5d44062ff2c043c2bd98395b05c` on
+Client implementation: `1d805370fbe320a557c3220ccca663b8f8c7a479` on
 `codex/mk-h2-bug-client`, based on updated main `120d261`. The original branch
 `codex/mk-h1-individual-evidence` was clean and remains preserved. Main was only
 fast-forwarded locally; it was neither pushed nor merged by this work.
@@ -19,7 +19,7 @@ in each verification command. [Exact environment](captures/mk-2026-11-25-h2/envi
 
 | Check | Actual result/output |
 | --- | --- |
-| `npm test` in client branch | Exit 0: **64 client + 60 inherited server tests**; [output](captures/mk-2026-11-25-h2/tests.txt). |
+| `npm test` in client branch | Exit 0: **65 client + 60 inherited server tests**; [output](captures/mk-2026-11-25-h2/tests.txt). |
 | `npm run lint` | Exit 0, no warnings; [output](captures/mk-2026-11-25-h2/lint.txt). |
 | `npm run build` | Exit 0; [output](captures/mk-2026-11-25-h2/build.txt). |
 | `npm run verify:sqlite` | Exit 0, Node v24.22.1, native SQLite 3.53.4 write/read passed. |
@@ -28,7 +28,7 @@ in each verification command. [Exact environment](captures/mk-2026-11-25-h2/envi
 | SQLite reopen after stopping server | 24 synthetic Bugs persisted, selected records matched, integrity `ok`, no FK violations; [output](captures/mk-2026-11-25-h2/sqlite-reopen.json). |
 | `git diff --check` | Exit 0. |
 
-The additional 24 client checks cover transport classification/envelopes, fresh
+The additional 25 client checks cover transport classification/envelopes, fresh
 paginated/detail reconciliation (including standalone reads), Unicode boundaries,
 source/case mismatches, multiple candidates, explicit creation, duplicate-submit
 guards, rejected/uncertain writes, failed reads, retained drafts, complete PUT,
@@ -65,18 +65,24 @@ The final browser run at the implementation SHA above:
    duplicate-risk action submitted again, and the real server saved that Bug.
    Browser-originated POST count was exactly four; 21 API fixture writes were
    separate. There were no browser page errors.
-7. Stopped the isolated server and reopened its database with a fresh connection.
+7. Exercised BK's uncertain PUT finding against the real backend: an update
+   committed before its response was aborted. A later local edit survived a failed
+   refresh and a successful fresh read, with Save still blocked. Explicit adoption
+   loaded the committed version with no PUT. A separate interrupted update tested
+   the deliberate overwrite choice: that choice sent no write; only the following
+   explicit Save persisted the retained draft. The browser recorded three PUT
+   attempts in these recovery checks, in addition to four earlier lifecycle PUTs.
+8. Stopped the isolated server and reopened its database with a fresh connection.
    All 24 Bugs and the selected source-linked records persisted.
 
-Only the final three selected UI captures are published:
+Only the final four selected UI captures are published:
 
 - [Saved details/status success](captures/mk-2026-11-25-h2/saved-success.png)
 - [Uncertain response after actual commit](captures/mk-2026-11-25-h2/uncertain-after-real-commit.png)
 - [Refreshed reconciliation with later-page candidate](captures/mk-2026-11-25-h2/reconciled-later-page.png)
+- [Uncertain PUT: fresh saved version versus retained draft, Save blocked](captures/mk-2026-11-25-h2/uncertain-update-compared.png)
 
-PR #18's opening body handed this capture scope to BK and asked BK to reuse
-the final states rather than duplicate screenshots after each edit. BK's requested
-review was confirmed through the GitHub API; BK has not yet responded or approved.
+[PR #18's capture handoff](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18#issuecomment-7172621509) asked BK to reuse final states rather than duplicate screenshots after each edit. BK reviewed the implementation and requested changes; no approval is claimed. The fourth capture addresses that specific review finding.
 These captures are author-side agent evidence, not BK's independent verification.
 
 The [browser runner](captures/mk-2026-11-25-h2/browser-check.mjs) is retained for
@@ -122,6 +128,8 @@ message entering the label's accessible text, and a real Chrome status-label
 lookup failure. The assertions and label associations were corrected; final
 results above were rerun after the fixes. Earlier failed-run captures remain
 under `/tmp` and are not presented as final evidence.
+
+BK's [initial review](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18#pullrequestreview-6063856650) and [follow-up](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18#pullrequestreview-6063871333) correctly identified that fresh reads alone re-enabled an uncertain PUT with a stale draft. The [inline finding](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18#discussion_r4699950615) is addressed by preserving the attempted update and blocking Save until an explicit choice: adopt the fresh saved version, or authorize keeping the draft before a separate explicit Save. Failed reads offer neither choice. Writes are also blocked while fresh reads are pending, preventing an older in-flight read from being used to recover a newer uncertain write. Component checks exercise both refresh outcomes and both choices; the final real browser run repeats the committed-response-loss case. BK re-review remains pending.
 
 **MK's personal human review/understanding statement remains pending.** The agent
 asked MK to inspect the PR and supply it; no human judgment or BK approval has

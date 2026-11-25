@@ -1,6 +1,6 @@
 {
-  "recordedAt": "2026-11-25T19:39:00.475Z",
-  "clientSHA": "91b0de7d1489a5d44062ff2c043c2bd98395b05c",
+  "recordedAt": "2026-11-25T19:49:29.517Z",
+  "clientSHA": "1d805370fbe320a557c3220ccca663b8f8c7a479",
   "backendSHA": "f41640dd0250288e4bc23f33eae55600f9a577c8",
   "mainBase": "120d261",
   "node": "v24.22.1",
@@ -9,7 +9,7 @@
   "release": "7.0.0-43-generic",
   "arch": "x64",
   "browser": "158.0.8127.36",
-  "databasePath": "/tmp/qa-baseline-isolated-EKbrR2/synthetic.sqlite",
+  "databasePath": "/tmp/qa-baseline-isolated-RhYuT9/synthetic.sqlite",
   "clientOrigin": "http://127.0.0.1:5173",
   "apiOrigin": "http://127.0.0.1:3001",
   "assistedBy": "Codex",
