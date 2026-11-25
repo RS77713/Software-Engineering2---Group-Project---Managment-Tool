@@ -42,8 +42,11 @@ MR's backend was exported into `/tmp/mk-h2-integration` and started with its
 `scripts/start-isolated.mjs`, pointing to a newly created synthetic SQLite file.
 The actual client ran through Vite at `http://127.0.0.1:5173`, proxying `/api` to
 `http://127.0.0.1:3001`. No production or existing working database was migrated.
-The backend dependency is deliberately absent from this focused client PR:
-main without PR #17 does not provide the Bug endpoints.
+The backend dependency is deliberately absent from this focused client PR.
+At the recorded run it was tested from MR's separate branch; PR #17 subsequently
+merged into main as `47848ee8ca23450eb85f90849eca1cbaa95d48ae` on 2026-11-25.
+That merge does not replace the exact client/backend SHAs of the recorded run or
+establish BK's independent integrated verification.
 
 The final browser run at the implementation SHA above:
 
@@ -132,9 +135,117 @@ under `/tmp` and are not presented as final evidence.
 
 BK's [initial review](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18#pullrequestreview-6063856650) and [follow-up](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18#pullrequestreview-6063871333) correctly identified that fresh reads alone re-enabled an uncertain PUT with a stale draft. The [inline finding](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18#discussion_r4699950615) is addressed by preserving the attempted update and blocking Save until an explicit choice: adopt the fresh saved version, or authorize keeping the draft before a separate explicit Save. Failed reads offer neither choice. Writes are also blocked while fresh reads are pending, preventing an older in-flight read from being used to recover a newer uncertain write. Component checks exercise both refresh outcomes and both choices; the final real browser run repeats the committed-response-loss case. BK re-review remains pending.
 
-**MK's personal human review/understanding statement remains pending.** The agent
-asked MK to inspect the PR and supply it; no human judgment or BK approval has
-been fabricated. MK should record what was personally inspected and understood
-at the exact reviewed SHA. BK's independent review and integration with MR's
-backend remain review/integration responsibilities; neither main nor this PR was
-merged by the agent.
+The requested direct Codex review is now recorded below. It completes the
+agent's review of its assisted output; it does not attest to MK personally
+inspecting the code or replace BK's independent review. No separate human MK
+statement has been supplied. The earlier pending-human wording must not be read
+as meaning that no author-side code/evidence review has taken place.
+
+## Direct review confirmation — 2026-11-26
+
+Reviewer: **Codex, the implementation assistant**, at the user's request.
+Reviewed PR head `428124aa94ccce548394df8caf31768ebbbac315`; a direct
+`git diff --exit-code 1d805370fbe320a557c3220ccca663b8f8c7a479 HEAD -- client`
+returned 0, confirming that its client source matches the recorded tested
+implementation. This confirmation is a review of existing code and executed
+evidence, not a new execution or an independent human approval.
+
+I read the Bug API helper, provider, field mapping/validation, creation/list/detail
+pages, App routes and failed-result navigation diff against the H1 API/client
+contract and ADR. I also read the API/component assertions, the browser runner's
+transport interception and assertions, actual test/lint/build output, environment
+and browser JSON, SQLite reopen output, BK's two reviews and inline blocker, and
+visually inspected all four final screenshots.
+
+What I checked and understood:
+
+- Bug creation is reached from an individual failed result. The result's own ID
+  enters the POST, while opening the route and marking an outcome issue no Bug
+  POST. Source case/run identity is derived by the API, not invented by the form.
+- Required reproduction fields assemble one trimmed, labelled plain-text
+  description. Limits count Unicode code points including labels/newlines; the
+  focused checks exercise the title and combined-description boundaries.
+- A synchronous ref guard plus disabled pending controls prevents repeated
+  in-flight submission. The helper issues one request, requires the expected
+  HTTP status/envelope/resource, and distinguishes definite contract rejections
+  from uncertain writes. No helper or effect automatically retries a POST.
+- Creation drafts are held above routes, keyed by source run/result. The first
+  attempted payload/source/time is distinct from subsequent edits and attempts.
+  Candidate navigation does not clear the creation draft. Confirmed creation,
+  explicit identification of a saved Bug, and explicit discard can clear it.
+- Reconciliation makes two fresh descending-ID passes, follows pagination and
+  retrieves candidate details, without status/severity filters hiding records.
+  Comparison uses submitted title/description/severity and source/case/run links;
+  matches are candidates for inspection, not proof of request identity. Failed
+  reads keep the outcome unresolved. Resubmission requires the user's separate
+  duplicate-risk action even after completed reads.
+- Detail updates send all editable fields and the retained case ID, omitting
+  both source fields. Source origin and its current outcome/notes are displayed
+  separately. Status choices follow the saved lifecycle, with final validation
+  owned by the server. Saved concurrent edits remain last-write-wins.
+- BK's uncertain-PUT finding was material: successful refresh formerly enabled
+  a stale draft. I checked the corrected code and both component/browser paths:
+  pending/failed reads leave Save blocked; a fresh read still requires explicit
+  adoption of server fields or authorization to retain the draft before a
+  separate Save. Neither choice itself sends a PUT.
+- The logs support 65 client and 60 inherited server passes, clean lint and a
+  successful build at the recorded client SHA; the separate MR copy records
+  82 server passes. Those server counts belong to different checkouts and must
+  not be added together as one suite.
+- The browser runner forwards a real write with `route.fetch()` before dropping
+  its response in the committed-loss cases. It does not substitute a successful
+  mock resource. Saved Bug IDs 1, 2 and 24, titles/statuses/source links in the
+  browser record agree with the selected reopened SQLite rows. The reopened
+  database records 24 Bugs, integrity `ok`, and no foreign-key violations.
+- The screenshots show saved success, creation uncertainty, a later-page
+  candidate and the corrected PUT comparison with Save blocked. The keyboard
+  record supports the bounded Enter/Tab/arrow-key and error-association account
+  above. I did not create replacement screenshots for this document review.
+
+Limits and remaining work:
+
+- These are author-side agent checks, including this direct review of my own
+  assisted output. They are not MK's human inspection, BK approval, or BK's
+  independent execution. I found no additional blocking discrepancy within the
+  inspected code/evidence scope; that is not a claim of complete defect absence.
+- The command/browser outputs are the executed 2026-11-25 record, not reruns on
+  the review date. No new application tests were necessary for these wording
+  changes. Current main's backend merge does not prove a newly combined final
+  application checkpoint has passed independent verification.
+- Component tests mock API helpers; helper tests stub fetch. Their duplicate
+  event, multiple-candidate and standalone-helper cases do not establish that
+  all of those cases were exercised through the real browser. The delivered
+  creation entry is the failed-result workflow; there is no standalone create UI.
+- Real browser evidence uses synthetic fixtures, one headless Linux Chrome and
+  seeded result 2, with controlled transport aborts. The keyboard check partly
+  positions focus programmatically before actual key presses; it is not an
+  end-to-end human keyboard session, screen-reader audit, or cross-browser test.
+- The stored `reconciliationReads` array continues collecting later scenario
+  reads and its substring filter also includes a Vite source-module request.
+  Treat it as a cumulative trace. The runner's page-2 assertion is made at the
+  earlier reconciliation checkpoint, not against the final array's total length.
+- Two read passes cannot prove that a delayed write will not arrive, that a
+  concurrently edited match still looks identical, or that pagination is an
+  atomic snapshot. Explicit resubmission can duplicate a Bug. There is no
+  idempotency key or optimistic concurrency guarantee in this API.
+- Creation drafts survive route changes in memory, not reload/tab close/crash.
+  Unsaved detail edits are local to the mounted detail page. No persistence,
+  production deployment, security acceptance or exhaustive migration/lifecycle
+  campaign is established by this client review.
+
+### BK verification artifact status
+
+I fetched and inspected [PR #19](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/19)
+at `854728c4753839c97818e70bd341035c96739cff`, including
+[the exact artifact](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/blob/854728c4753839c97818e70bd341035c96739cff/docs/evidence/bk-h2-integration.md)
+and its PR description/comments. It explicitly says plan prepared and journeys
+not executed; no executed result attachment or follow-up comment was available
+when checked. **BK's execution-results review remains pending. No planned check
+is credited as passed and no approval of executed verification is submitted.**
+
+When results are published, the review needs the actual tested combined SHA,
+environment/commands, expected-versus-observed outcomes, request and database
+counts, captures/keyboard observations, failures or blocked checks, and BK's
+conclusions. Compare those with R1–R8 and the uncertain-PUT correction; keep
+unexecuted cases and any coverage gaps explicit. This pending review is a
+follow-up condition, not a claim of background monitoring or completed execution.
