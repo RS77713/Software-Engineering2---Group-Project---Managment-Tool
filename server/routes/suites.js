@@ -135,11 +135,19 @@ function handleUpdateSuite(req, res) {
 }
 
 function handleDeleteSuite(req, res) {
-  const existing = db.prepare('SELECT * FROM suites WHERE id = ?').get(req.params.id)
-  if (!existing) return fail(res, 404, 'suite not found')
-
-  // suite_test_cases rows are removed automatically via ON DELETE CASCADE.
-  db.prepare('DELETE FROM suites WHERE id = ?').run(req.params.id)
+  const outcome = db.transaction(() => {
+    if (!db.prepare('SELECT id FROM suites WHERE id = ?').get(req.params.id)) return 'missing'
+    const retained = db.prepare(`SELECT 1 FROM bugs b
+      JOIN test_run_results r ON r.id = b.source_result_id
+      JOIN test_runs_v2 tr ON tr.id = r.run_id WHERE tr.suite_id = ? LIMIT 1`).get(req.params.id)
+    if (retained) return 'retained'
+    // The write lock prevents a new reference between this check and deletion;
+    // foreign keys also reject deletion through other database connections.
+    db.prepare('DELETE FROM suites WHERE id = ?').run(req.params.id)
+    return 'deleted'
+  }).immediate()
+  if (outcome === 'missing') return fail(res, 404, 'suite not found')
+  if (outcome === 'retained') return fail(res, 409, 'a bug retains this suite\'s run history')
   ok(res, { id: Number(req.params.id) })
 }
 

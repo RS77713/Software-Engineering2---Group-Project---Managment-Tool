@@ -1,0 +1,55 @@
+{
+  "testedSha": "3daf0e74bc6bd78437137b324df6e89cca9b9df7",
+  "startedAt": "2026-11-25T18:11:20.295573+00:00",
+  "node": "v24.22.1",
+  "npm": "11.19.1",
+  "os": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "commands": [
+    {
+      "command": "npm run verify:sqlite",
+      "exitCode": 0,
+      "output": "sqlite.txt"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "output": "lint.txt"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "output": "tests.txt"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "output": "build.txt"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "output": "diff-check.txt"
+    }
+  ],
+  "finishedAt": "2026-11-25T18:11:39.167989+00:00",
+  "baseSha": "120d261ec5ba7db7161ee0fd5ba1da85f29113f5",
+  "branch": "codex/mr-h2-bug-api",
+  "setup": {
+    "command": "npm ci",
+    "exitCode": 0,
+    "output": "npm-ci.txt",
+    "note": "Installed before the implementation commit; package manifests, lockfile and script policy were unchanged."
+  },
+  "focusedChecks": {
+    "command": "node --test server/test/bugs.test.js server/test/bugs-migration.test.js",
+    "exitCode": 0,
+    "tests": 22,
+    "note": "Pre-commit check of the same source contents; all 22 checks also passed in the captured npm test run at testedSha."
+  },
+  "summary": {
+    "clientTestsPassed": 40,
+    "serverTestsPassed": 82,
+    "newServerTests": 22,
+    "sqlite": "3.53.4"
+  }
+}
