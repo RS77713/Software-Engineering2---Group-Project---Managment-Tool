@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { to: '/test-cases', label: 'Test Cases' },
   { to: '/test-suites', label: 'Test Suites' },
   { to: '/test-runs', label: 'Test Runs' },
+  { to: '/bugs', label: 'Bugs' },
 ]
 
 function NavBar() {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { getTestRun, updateTestRunResult } from '../api/test-runs.js'
 import RunStatusBadge from '../components/RunStatusBadge.jsx'
 import SeverityBadge from '../components/SeverityBadge.jsx'
@@ -9,6 +9,8 @@ import '../styles/test-runs.css'
 
 function TestRunDetailPage() {
   const { id } = useParams()
+  const [params] = useSearchParams()
+  const selectedResultId = params.get('resultId')
   const [run, setRun] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -33,6 +35,10 @@ function TestRunDetailPage() {
       cancelled = true
     }
   }, [id])
+
+  useEffect(() => {
+    if (!loading && run && selectedResultId) document.getElementById(`result-${selectedResultId}`)?.focus()
+  }, [loading, run, selectedResultId])
 
   async function handleMarkResult(resultId, result) {
     setSavingResultId(resultId)
@@ -94,13 +100,15 @@ function TestRunDetailPage() {
       </div>
 
       <h2>Results</h2>
+      {selectedResultId && !run.results.some((r) => String(r.id) === selectedResultId) && <p role="alert">The selected source result was not found.</p>}
+      {!run.results.some((r) => r.result === 'failed') && <p>No failed test results available.</p>}
 
       {run.results.length === 0 ? (
         <p>This run has no snapshotted cases.</p>
       ) : (
         <ol className="run-results-list">
           {run.results.map((result) => (
-            <li key={result.id} className="run-result-row">
+            <li key={result.id} id={`result-${result.id}`} tabIndex={-1} className="run-result-row" aria-label={`Result ${result.id}: ${result.testCaseTitle}`}>
               <div className="run-result-summary">
                 <Link to={`/test-cases/${result.testCaseId}`} className="row-title-link run-result-title">
                   {result.testCaseTitle}
@@ -121,6 +129,8 @@ function TestRunDetailPage() {
                 />
               </label>
 
+              <p><Link to={`/bugs?sourceResultId=${result.id}`}>View bugs for result #{result.id}</Link></p>
+              {result.result === 'failed' && <p><Link className="button" to={`/bugs/new/${id}/${result.id}`}>Create Bug</Link></p>}
               <div className="run-result-actions">
                 {['passed', 'failed', 'skipped'].map((outcome) => (
                   <button
