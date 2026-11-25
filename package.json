@@ -20,6 +20,7 @@
     "build": "npm run build -w client",
     "lint": "npm run lint -w client",
     "verify:sqlite": "node scripts/verify-sqlite.mjs",
+    "smoke:h2": "node scripts/smoke-h2.mjs",
     "test": "npm run test -w client && npm run test -w server",
     "start": "npm run start -w server",
     "start:isolated": "node scripts/start-isolated.mjs"

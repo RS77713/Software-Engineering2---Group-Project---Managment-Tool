@@ -1,0 +1,65 @@
+
+> qa-management-tool@0.1.0 smoke:h2
+> node scripts/smoke-h2.mjs
+
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+{
+  "event": "h2-smoke-passed",
+  "node": "v24.21.0",
+  "address": {
+    "address": "127.0.0.1",
+    "family": "IPv4",
+    "port": 63902
+  },
+  "database": "Owned temporary synthetic SQLite; removed on completion",
+  "checks": [
+    {
+      "name": "startup and additive schema available",
+      "actual": {
+        "http": 200,
+        "version": 1
+      }
+    },
+    {
+      "name": "explicit creation derives source identity and reads saved bug",
+      "actual": {
+        "http": 201,
+        "sourceResultId": 4,
+        "sourceRunId": 2,
+        "testCaseId": 6
+      }
+    },
+    {
+      "name": "source/case mismatch rejected without state changes",
+      "actual": {
+        "http": 400
+      }
+    },
+    {
+      "name": "forbidden transition preserves fields and timestamps",
+      "actual": {
+        "http": 409
+      }
+    },
+    {
+      "name": "closed bug retains source and suite deletion is atomic",
+      "actual": {
+        "http": 409
+      }
+    },
+    {
+      "name": "later source edit retained; nonfailed source rejects new bug",
+      "actual": {
+        "http": 409
+      }
+    },
+    {
+      "name": "SQLite reopen preserves status and source identity",
+      "actual": {
+        "status": "closed"
+      }
+    }
+  ]
+}

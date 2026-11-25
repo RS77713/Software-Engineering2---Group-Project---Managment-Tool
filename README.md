@@ -80,6 +80,36 @@ This restricts network binding; it does not add authentication, isolate the
 process from other local processes, or resolve dependency advisories. Use only
 synthetic data and retain the release gate below.
 
+## H2 API/database smoke and configuration
+
+```bash
+npm run smoke:h2
+```
+
+The smoke command starts the real API on an OS-selected IPv4 loopback port and
+uses its own temporary synthetic SQLite database, overriding inherited database
+paths. It creates a failed execution through inherited APIs, reports a Bug, checks
+rejected writes and retained source state, then closes/reopens SQLite to check
+persistence. Successful output ends with `h2-smoke-passed` and exit 0. It removes
+its own database files on completion. CI runs it after the existing build/tests.
+It is an API/database check; browser/retry/keyboard and non-author fresh-setup
+evidence remain separate H2 requirements. See the [H2 evidence index](docs/evidence/H2.md).
+
+The existing [.env.example](.env.example) contains only non-secret `PORT` and
+`DB_PATH` examples. It is not loaded automatically. For example, run the isolated
+launcher with the supplied configuration explicitly:
+
+```bash
+node --env-file=.env.example scripts/start-isolated.mjs
+```
+
+`PORT` is honored; the isolated launcher still chooses a new synthetic database
+and ignores inherited `DB_PATH`/`TEST_DB_PATH`. Ordinary startup can migrate a
+configured earlier database from schema 0 to 1 before serving; keep verification
+on isolated synthetic data. The migration/failure checks and dependency gate
+remain as documented in the linked records. Use the same pinned npm prefix above
+when your global npm differs.
+
 ## Ordinary development scripts
 
 ```bash
