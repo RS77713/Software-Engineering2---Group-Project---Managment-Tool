@@ -414,7 +414,14 @@ function handleDeleteTestCase(req, res) {
   // stays meaningful. SQLite enforces that as a foreign key constraint;
   // catch it here and turn it into a clear error instead of a generic 500.
   try {
-    db.prepare('DELETE FROM test_cases WHERE id = ?').run(req.params.id)
+    const deleted = db.transaction(() => {
+      // Preserve the existing 400 even when a source-linked Bug's SET NULL/CHECK
+      // would fire before the inherited run-result foreign-key restriction.
+      if (db.prepare('SELECT 1 FROM test_run_results WHERE test_case_id = ? LIMIT 1').get(req.params.id)) return false
+      db.prepare('DELETE FROM test_cases WHERE id = ?').run(req.params.id)
+      return true
+    }).immediate()
+    if (!deleted) return fail(res, 400, 'cannot delete: this test case is part of one or more test run results')
   } catch (err) {
     if (err.code === 'SQLITE_CONSTRAINT_FOREIGNKEY') {
       return fail(res, 400, 'cannot delete: this test case is part of one or more test run results')

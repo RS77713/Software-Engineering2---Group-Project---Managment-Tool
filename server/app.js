@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import cors from 'cors'
 import express from 'express'
+import bugsRouter from './routes/bugs.js'
 import dashboardRouter from './routes/dashboard.js'
 import suitesRouter from './routes/suites.js'
 import testCasesRouter from './routes/test-cases.js'
@@ -17,6 +18,8 @@ const clientDistPath = path.join(__dirname, '../client/dist')
 const app = express()
 
 app.use(cors())
+// Bug-specific media validation/parser errors keep the agreed response envelope.
+app.use('/api/bugs', bugsRouter)
 app.use('/api/test-cases/import', express.json({ limit: '2mb' }))
 app.use(express.json())
 
