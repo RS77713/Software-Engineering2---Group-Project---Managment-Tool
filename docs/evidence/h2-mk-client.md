@@ -7,6 +7,7 @@ fast-forwarded locally; it was neither pushed nor merged by this work.
 
 - [Client PR #18](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18)
 - [BK review surface](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18/files): `bkuvshinnikov` requested; no approval claimed.
+- [Response to BK's blocker and re-review handoff](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18#discussion_r4700069220): final implementation `1d80537`, real uncertain-PUT recovery results, and explicit choices described. PR marked ready; BK re-review requested.
 - [Real backend dependency, MR PR #17](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/17), tested at `f41640dd0250288e4bc23f33eae55600f9a577c8`.
 - [H1 API](../h1/bug-api-contract.md), [client behavior](../h1/client-behaviour.md), and [ADR](../h1/architecture-decision.md).
 
