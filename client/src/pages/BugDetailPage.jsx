@@ -71,7 +71,7 @@ function BugDetailPageContent() {
         <p>Failed when reported. {source ? `Current source outcome: ${source.result}. Current notes: ${source.notes || '(none)'}` : sourceError ? `Source read failed: ${sourceError}` : 'Loading current source…'}</p></div> : <p>No execution source.</p>}
       <form noValidate onSubmit={save}>
         <BugFields value={draft} errors={errors} disabled={pending} onChange={(name, value) => setDraft({ ...draft, [name]: value })} />
-        <label>Status<select value={draft.status} disabled={pending} onChange={(e) => setDraft({ ...draft, status: e.target.value })}>{[...new Set([bug.status, draft.status, ...transitions[bug.status]])].map((s) => <option key={s}>{s}</option>)}</select></label>
+        <label htmlFor="bug-status">Status</label><select id="bug-status" value={draft.status} disabled={pending} onChange={(e) => setDraft({ ...draft, status: e.target.value })}>{[...new Set([bug.status, draft.status, ...transitions[bug.status]])].map((s) => <option key={s}>{s}</option>)}</select>
         <p>Source and linked case identity are retained on update.</p>
         <button disabled={pending || uncertain} type="submit">{pending ? 'Saving…' : 'Save changes'}</button>
       </form>
