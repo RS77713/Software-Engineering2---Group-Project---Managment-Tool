@@ -1,0 +1,74 @@
+{
+  "recordedDate": "2026-11-21",
+  "timezone": "Europe/Riga",
+  "owner": "EM",
+  "operator": "Codex acting on EM's request",
+  "applicationCheckpoint": "e665be8a26e7c746c60e5680a6617766dbeb54b1",
+  "baseline": "bc304f1d954cb1e55d5ec7cdd06e49bba455613e",
+  "command": "node --test server/test/test-runs.test.js",
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "win32",
+    "arch": "x64",
+    "sqlitePackage": "13.0.3",
+    "systemNpm": "10.8.3",
+    "npmUsedForThisCommand": false,
+    "dependencyInstallPerformed": false
+  },
+  "exitCode": 0,
+  "expected": {
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "actual": {
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "cases": [
+    {
+      "name": "creating a run snapshots the suite cases",
+      "input": "Create suite with two cases, POST {suiteId, createdBy:'MK'}, add another suite case after creation",
+      "expected": "201, in-progress, two pending results; later suite membership addition leaves two results",
+      "actual": "All assertions passed"
+    },
+    {
+      "name": "result updates maintain totals and automatically complete the run",
+      "input": "PUT passed on first result, failed on second result",
+      "expected": "First update in-progress with one pass; final update HTTP 200 and failed run with one pass/one fail and endTime",
+      "actual": "All assertions passed"
+    },
+    {
+      "name": "invalid execution input returns a useful failure response",
+      "input": "PUT {result:'unknown'} on existing result",
+      "expected": "HTTP 400 and error matching /result must be one of/",
+      "actual": "All assertions passed"
+    }
+  ],
+  "sourceComparison": {
+    "command": "git diff bc304f1d954cb1e55d5ec7cdd06e49bba455613e e665be8a26e7c746c60e5680a6617766dbeb54b1 -- server/app.js server/db.js server/routes/test-runs.js server/test/test-runs.test.js",
+    "result": "No differences"
+  },
+  "isolation": "Existing test uses TEST_DB_PATH pointing to a uniquely named temporary SQLite file directly in os.tmpdir(), with real HTTP and SQLite; closes server/database and removes the owned file and its sidecars.",
+  "personalVerification": {
+    "EM": "EM directed assisted execution and, on 2026-11-21, confirmed review of the proposed technical explanation and limits. Home/Dashboard screenshot inspection separately confirmed. MR assessed this documented assisted workflow as satisfactory in review 6006963120, without independently observing the human actions or inferring an unaided run/answer. Overall H1 completeness remains pending.",
+    "explanationConfirmation": {
+      "date": "2026-11-21",
+      "scope": "EM confirmed the assisted explanation describing baseline run creation, result aggregation and HTTP 400 invalid-input rejection through real API/SQLite, with browser, new Bug functionality and dependency security excluded.",
+      "explanationAuthorship": "Assisted draft reviewed and adopted by EM",
+      "independentCriterionAssessment": "MR found no additional EM-specific evidence gap in the documented assisted workflow; scoped COMMENT assessment, not final whole-team H1 approval.",
+      "reviewedRevision": "ee243aad4a2240c4cbbaef20a49df8efd9b9ec46",
+      "reviewURL": "https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/13#pullrequestreview-6006963120"
+    }
+  },
+  "limitations": [
+    "No interactive browser check in this run.",
+    "No Bug feature implementation tested.",
+    "Invalid-input test asserts status/message, not full before/after database equality.",
+    "Does not establish dependency security or full H1 acceptance.",
+    "Existing dependency installation used; no fresh install or npm upgrade in this focused run."
+  ]
+}
