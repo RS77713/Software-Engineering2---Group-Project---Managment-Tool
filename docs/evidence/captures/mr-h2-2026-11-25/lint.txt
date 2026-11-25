@@ -1,0 +1,8 @@
+
+> qa-management-tool@0.1.0 lint
+> npm run lint -w client
+
+
+> client@0.0.0 lint
+> oxlint
+

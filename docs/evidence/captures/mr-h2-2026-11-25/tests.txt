@@ -1,0 +1,153 @@
+
+> qa-management-tool@0.1.0 test
+> npm run test -w client && npm run test -w server
+
+
+> client@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.0 /Users/mr/Documents/UNIVERSITY/Software engineering/group project/Software-Engineering2---Group-Project---Managment-Tool/client
+
+
+ Test Files  9 passed (9)
+      Tests  40 passed (40)
+   Start at  20:11:26
+   Duration  7.58s (environment 66%, tests 17%, import 13%, transform 5%)
+
+Environment  jsdom was created 9 times · 27.48s total, 66% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+
+> server@0.1.0 test
+> node --test test/*.test.js
+
+✔ a consistent earlier-data copy upgrades without changing inherited rows, IDs, schema or sequences (382.592614ms)
+✔ a fresh database initializes all tables and the second startup is a no-op (246.034213ms)
+✔ a failed 0-to-1 migration rolls back DDL and version changes and stops startup (286.342416ms)
+✔ unsupported schema versions stop startup without creating or changing tables or data (379.130647ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ standalone creation trims text, retains internal whitespace, allows duplicates and persists (292.81558ms)
+✔ source creation uses result identity and derives the case/run, with no implicit creation or deduplication (181.766759ms)
+✔ missing, mismatched and no-longer-failed sources reject without insertion (64.615691ms)
+✔ write transaction observes another writer changing or deleting the source before validation (924.272041ms)
+✔ creation rejects missing, mistyped, read-only and unknown fields with no writes (64.101613ms)
+✔ Unicode code-point boundaries include non-BMP characters and embedded NUL (26.037497ms)
+✔ JSON/media/size errors and unexpected database failures use the failure envelope (12.115184ms)
+✔ detail IDs are strict decimal safe integers; unsupported operations do not delete or modify (25.287715ms)
+✔ every lifecycle edge validates the stored state and failed edits preserve all fields and timestamps (60.551074ms)
+✔ complete PUT requires all fields, prohibits source/read-only fields and clears omitted standalone links (21.148857ms)
+✔ source identity remains immutable across PUT and later outcome/notes edits (25.550326ms)
+✔ source retention blocks suite/run/result deletion atomically, including after closure (10.755559ms)
+✔ unreferenced suite deletion and standalone test-case unlink retain inherited behaviour (7.841204ms)
+SqliteError: synthetic unrelated failure
+    at sqliteTransaction.<anonymous> (file:///Users/mr/Documents/UNIVERSITY/Software%20engineering/group%20project/Software-Engineering2---Group-Project---Managment-Tool/server/routes/suites.js:146:51)
+    at sqliteTransaction (/Users/mr/Documents/UNIVERSITY/Software engineering/group project/Software-Engineering2---Group-Project---Managment-Tool/node_modules/better-sqlite3/lib/methods/transaction.js:65:24)
+    at handleDeleteSuite (file:///Users/mr/Documents/UNIVERSITY/Software%20engineering/group%20project/Software-Engineering2---Group-Project---Managment-Tool/server/routes/suites.js:148:6)
+    at Layer.handle [as handle_request] (/Users/mr/Documents/UNIVERSITY/Software engineering/group project/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/mr/Documents/UNIVERSITY/Software engineering/group project/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/Users/mr/Documents/UNIVERSITY/Software engineering/group project/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/Users/mr/Documents/UNIVERSITY/Software engineering/group project/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/layer.js:95:5)
+    at /Users/mr/Documents/UNIVERSITY/Software engineering/group project/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/index.js:284:15
+    at param (/Users/mr/Documents/UNIVERSITY/Software engineering/group project/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/index.js:365:14)
+    at param (/Users/mr/Documents/UNIVERSITY/Software engineering/group project/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/index.js:376:14) {
+  code: 'SQLITE_CONSTRAINT_TRIGGER'
+}
+✔ unrelated suite database failures stay 500 and roll back instead of becoming a retention conflict (4.409979ms)
+✔ list filters, deterministic sorting and pagination support later-page reconciliation without writes (93.998723ms)
+✔ search is literal, ASCII-case-insensitive and preserves the complete query string (16.797579ms)
+✔ all severity ranks and timestamp sort directions use ascending IDs for ties (16.271407ms)
+✔ invalid, repeated and unknown list parameters reject instead of being ignored (24.537297ms)
+✔ parses a simple header + data rows, unquoted (4.934097ms)
+✔ row numbers start at 2 for the first data row (header is row 1) (0.280752ms)
+✔ a quoted field may contain a comma (1.433465ms)
+✔ a quoted field may contain embedded newlines (multiline steps), counted as one row (0.268841ms)
+✔ a doubled quote ("") inside a quoted field is an escaped literal quote (0.200777ms)
+✔ CRLF line endings are handled the same as LF (0.225571ms)
+✔ a leading UTF-8 BOM is stripped, and non-ASCII content is preserved (0.206898ms)
+✔ a file with no trailing newline still captures its last row (0.201208ms)
+✔ fully blank lines are skipped entirely — not counted as a row, and row numbers stay contiguous (0.233351ms)
+✔ a row with a different column count than the header is still returned as-is — the caller decides what to do with it (0.264221ms)
+✔ an unterminated quoted field throws a CsvParseError instead of silently swallowing the rest of the file (0.943725ms)
+✔ a completely empty file throws a CsvParseError (0.198718ms)
+✔ a file containing only blank lines throws a CsvParseError (no header row exists) (0.156166ms)
+✔ formatCsvField leaves a plain value unquoted (0.236054ms)
+✔ formatCsvField quotes a value containing a comma, a quote, or a line break, and doubles internal quotes (0.219685ms)
+✔ formatCsvField turns null/undefined into an empty (unquoted) field (0.410874ms)
+✔ stringifyCsv round-trips through parseCsv: commas, quotes, multiline steps, and UTF-8 all survive exactly (0.832761ms)
+✔ stringifyCsv with zero rows still produces a valid, parseable header-only document (0.230541ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ an empty database returns stable zero-data dashboard contracts (49.470684ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ dashboard metrics summarize the core workflow (347.598994ms)
+✔ dashboard trends contain pass-rate and every test-case status bucket (5.669897ms)
+✔ isolated startup binds loopback and uses fresh synthetic data despite inherited environment (727.442403ms)
+ℹ {"actualBoundAddress":{"address":"127.0.0.1","family":"IPv4","port":51493},"freshSyntheticDatabase":true,"seededCases":5,"inheritedDatabasePreserved":true}
+✔ isolated startup rejects an out-of-range port before starting the application (116.563719ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ PUT /api/suites/:id preserves status when the request omits it (259.057614ms)
+✔ deleting a test case is discoverable as removing it from its suites (132.100014ms)
+✔ an error passed to next() (e.g. malformed JSON) still gets the {success,data,error} shape (5.614149ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ the response is a downloadable text/csv file with a dated filename (264.798725ms)
+✔ headers are exactly the columns requested, in order, and are compatible with CSV import (74.231576ms)
+✔ an empty result set still exports just the header row, as a valid CSV (57.527118ms)
+✔ the export honors the active status filter, matching the list endpoint (35.939511ms)
+✔ the export honors the active search filter, matching the list endpoint (18.698376ms)
+✔ the export honors the current sort/order, matching the list endpoint (severity, ascending) (92.559079ms)
+✔ with no sort param at all, the export defaults to id ascending (creation order, newest last), matching the list default (18.046938ms)
+✔ the export still honors an explicitly chosen updatedAt sort, overriding the id default (67.210871ms)
+✔ the export includes every matching row, not just one page worth (beyond PAGE_SIZE=20) (99.529215ms)
+✔ commas, double quotes, multi-line steps, and UTF-8 all survive the export/import round trip exactly (5.7105ms)
+✔ a re-import of the exported CSV recognizes its headers and reports every row as an existing duplicate (11.33574ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ the response envelope follows { success, data, error }, with totalRows/committed/rows/summary (84.938821ms)
+✔ missing csv in the request body is rejected (7.507276ms)
+✔ a header missing any of title/severity/steps/expected_result rejects the whole file, before any row is processed (17.143335ms)
+✔ expected_result is also accepted spelled expectedResult or "expected result" (6.21448ms)
+✔ a duplicate header column is rejected as a whole-file error (3.906631ms)
+✔ preview (commit: false) never writes anything, even for an entirely valid file (8.964505ms)
+✔ commit inserts only valid, non-duplicate rows, and the created row matches the CSV (including multi-line steps) (11.888624ms)
+✔ status defaults to draft and preconditions to null when their columns are absent, matching the manual form (5.258764ms)
+✔ a row missing the title-bracket feature area, an invalid severity, or no steps reuses the exact validator messages, unmodified (2.557308ms)
+✔ expected_result: a missing header rejects the whole file, but a present-and-blank cell only invalidates that one row (12.87144ms)
+✔ a structurally malformed file (an unterminated quoted field) is rejected as a whole-file error, and writes nothing (7.533122ms)
+✔ a row with the wrong number of columns is reported as invalid for that row, not silently misaligned (2.258926ms)
+✔ fully blank lines anywhere in the file are skipped — not counted as a row, and not an error (2.067143ms)
+✔ two rows in the same file sharing a title: the first is importable, the second is reported as a duplicate of it and skipped (4.835362ms)
+✔ a title that already exists in the database is reported as a duplicate and skipped, never overwritten (8.195042ms)
+✔ commit re-checks duplicates against live data, not a stale earlier preview (16.335952ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ GET /api/test-cases with no sort/order params at all defaults to id ascending (creation order, newest last) (75.039276ms)
+✔ explicitly sorting by updatedAt (desc) still works exactly as before, overriding the id default (43.237966ms)
+✔ explicitly sorting by severity still works exactly as before, overriding the id default (30.566846ms)
+✔ the id default combines correctly with an active status filter (12.646796ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ creating a run snapshots the suite cases (116.073566ms)
+✔ result updates maintain totals and automatically complete the run (25.27248ms)
+✔ invalid execution input returns a useful failure response (6.590291ms)
+ℹ tests 82
+ℹ suites 0
+ℹ pass 82
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2625.016189
