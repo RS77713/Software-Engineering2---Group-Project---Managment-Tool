@@ -1,0 +1,248 @@
+{
+  "databasePath": "/var/folders/qd/svj04r_x0ss6sfjx_sbd5v5h0000gn/T/qa-baseline-isolated-g060Cm/synthetic.sqlite",
+  "closedServerBeforeReopen": true,
+  "schemaVersion": 1,
+  "bugCount": 23,
+  "bugs": [
+    {
+      "id": 1,
+      "title": "BK H2 update committed before lost response",
+      "status": "resolved",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 2,
+      "title": "BK H2 committed POST response lost",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 3,
+      "title": "BK H2 page filler 01",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 4,
+      "title": "BK H2 page filler 02",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 5,
+      "title": "BK H2 page filler 03",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 6,
+      "title": "BK H2 page filler 04",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 7,
+      "title": "BK H2 page filler 05",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 8,
+      "title": "BK H2 page filler 06",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 9,
+      "title": "BK H2 page filler 07",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 10,
+      "title": "BK H2 page filler 08",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 11,
+      "title": "BK H2 page filler 09",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 12,
+      "title": "BK H2 page filler 10",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 13,
+      "title": "BK H2 page filler 11",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 14,
+      "title": "BK H2 page filler 12",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 15,
+      "title": "BK H2 page filler 13",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 16,
+      "title": "BK H2 page filler 14",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 17,
+      "title": "BK H2 page filler 15",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 18,
+      "title": "BK H2 page filler 16",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 19,
+      "title": "BK H2 page filler 17",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 20,
+      "title": "BK H2 page filler 18",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 21,
+      "title": "BK H2 page filler 19",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 22,
+      "title": "BK H2 page filler 20",
+      "status": "open",
+      "testCaseId": 2,
+      "sourceResultId": 2,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    },
+    {
+      "id": 23,
+      "title": "BK H2 explicit no-match resubmission",
+      "status": "open",
+      "testCaseId": 5,
+      "sourceResultId": 3,
+      "sourceRunId": 1,
+      "currentSourceResult": "failed"
+    }
+  ],
+  "run": {
+    "id": 1,
+    "status": "failed",
+    "results": [
+      {
+        "id": 1,
+        "runId": 1,
+        "testCaseId": 1,
+        "result": "passed",
+        "notes": null
+      },
+      {
+        "id": 2,
+        "runId": 1,
+        "testCaseId": 2,
+        "result": "failed",
+        "notes": "Synthetic source restored after rejection check."
+      },
+      {
+        "id": 3,
+        "runId": 1,
+        "testCaseId": 5,
+        "result": "failed",
+        "notes": "Synthetic failed source for no-match retry check."
+      }
+    ]
+  },
+  "foreignKeyCheck": [],
+  "integrityCheck": [
+    {
+      "integrity_check": "ok"
+    }
+  ]
+}

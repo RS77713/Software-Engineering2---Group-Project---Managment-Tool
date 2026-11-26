@@ -1,0 +1,229 @@
+{
+  "testedSha": "2b76cd99d4244d98023bcdd3b93ab17d2e3bdd15",
+  "base": "http://127.0.0.1:63621",
+  "dbPath": "/var/folders/qd/svj04r_x0ss6sfjx_sbd5v5h0000gn/T/qa-baseline-isolated-g060Cm/synthetic.sqlite",
+  "posts": 5,
+  "puts": 2,
+  "postStatuses": [
+    201,
+    201
+  ],
+  "page2Reads": 2,
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 409 (Conflict)",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED"
+  ],
+  "pageErrors": [],
+  "initialRun": {
+    "id": 1,
+    "suiteId": 1,
+    "suiteName": "Account Flows Suite",
+    "status": "failed",
+    "passCount": 1,
+    "failCount": 1,
+    "skipCount": 1,
+    "startTime": "2026-11-24T12:37:30.049Z",
+    "endTime": "2026-11-24T13:37:30.049Z",
+    "createdBy": "QA Team",
+    "results": [
+      {
+        "id": 1,
+        "runId": 1,
+        "testCaseId": 1,
+        "testCaseTitle": "Login with valid credentials [Authentication]",
+        "severity": "Critical",
+        "result": "passed",
+        "durationMs": 850,
+        "notes": null
+      },
+      {
+        "id": 2,
+        "runId": 1,
+        "testCaseId": 2,
+        "testCaseTitle": "Reset a forgotten password [Authentication]",
+        "severity": "Major",
+        "result": "failed",
+        "durationMs": 1200,
+        "notes": "Reset email never arrived after 5 minutes."
+      },
+      {
+        "id": 3,
+        "runId": 1,
+        "testCaseId": 5,
+        "testCaseTitle": "Update profile picture [Profile]",
+        "severity": "Trivial",
+        "result": "skipped",
+        "durationMs": null,
+        "notes": "Blocked by the failure above."
+      }
+    ]
+  },
+  "initialBugCount": 0,
+  "keyboard": {
+    "enterFocused": "bug-title",
+    "ariaInvalid": "true",
+    "ariaDescribedBy": "error-title",
+    "errorText": "Enter a title of 1–200 characters.",
+    "nextTab": "bug-steps"
+  },
+  "pendingPostCount": 1,
+  "pendingSubmitDisabled": true,
+  "createdBug": {
+    "id": 1,
+    "title": "BK H2 integrated saved defect 😀",
+    "description": "Steps: Open the synthetic reset form; submit the provided test value.\nExpected: A clear validation message is shown.\nActual: The form continues without validation.",
+    "severity": "Major",
+    "status": "open",
+    "testCaseId": 2,
+    "sourceResultId": 2,
+    "sourceRunId": 1,
+    "createdAt": "2026-11-26T12:37:47.722Z",
+    "updatedAt": "2026-11-26T12:37:47.722Z"
+  },
+  "countAfterCreate": 1,
+  "updatedBug": {
+    "id": 1,
+    "title": "BK H2 integrated saved defect — edited",
+    "description": "Steps: Open the synthetic reset form; submit the provided test value.\nExpected: A clear validation message is shown.\nActual: The form continues without validation.",
+    "severity": "Major",
+    "status": "in-progress",
+    "testCaseId": 2,
+    "sourceResultId": 2,
+    "sourceRunId": 1,
+    "createdAt": "2026-11-26T12:37:47.722Z",
+    "updatedAt": "2026-11-26T12:37:47.823Z"
+  },
+  "runAfterBugUpdate": {
+    "id": 1,
+    "suiteId": 1,
+    "suiteName": "Account Flows Suite",
+    "status": "failed",
+    "passCount": 1,
+    "failCount": 1,
+    "skipCount": 1,
+    "startTime": "2026-11-24T12:37:30.049Z",
+    "endTime": "2026-11-24T13:37:30.049Z",
+    "createdBy": "QA Team",
+    "results": [
+      {
+        "id": 1,
+        "runId": 1,
+        "testCaseId": 1,
+        "testCaseTitle": "Login with valid credentials [Authentication]",
+        "severity": "Critical",
+        "result": "passed",
+        "durationMs": 850,
+        "notes": null
+      },
+      {
+        "id": 2,
+        "runId": 1,
+        "testCaseId": 2,
+        "testCaseTitle": "Reset a forgotten password [Authentication]",
+        "severity": "Major",
+        "result": "failed",
+        "durationMs": 1200,
+        "notes": "Reset email never arrived after 5 minutes."
+      },
+      {
+        "id": 3,
+        "runId": 1,
+        "testCaseId": 5,
+        "testCaseTitle": "Update profile picture [Profile]",
+        "severity": "Trivial",
+        "result": "skipped",
+        "durationMs": null,
+        "notes": "Blocked by the failure above."
+      }
+    ]
+  },
+  "bugAfterSourceEdit": {
+    "id": 1,
+    "title": "BK H2 integrated saved defect — edited",
+    "description": "Steps: Open the synthetic reset form; submit the provided test value.\nExpected: A clear validation message is shown.\nActual: The form continues without validation.",
+    "severity": "Major",
+    "status": "in-progress",
+    "testCaseId": 2,
+    "sourceResultId": 2,
+    "sourceRunId": 1,
+    "createdAt": "2026-11-26T12:37:47.722Z",
+    "updatedAt": "2026-11-26T12:37:47.823Z"
+  },
+  "rejectedDraftTitle": "BK H2 rejected stale source",
+  "countAfterRejected": 1,
+  "rejectedPosts": 2,
+  "lostPost": {
+    "id": 2,
+    "title": "BK H2 committed POST response lost",
+    "status": "open",
+    "test_case_id": 2,
+    "source_result_id": 2,
+    "realHttpStatusBeforeAbort": 201
+  },
+  "postCountAfterLostResponse": 3,
+  "reconciliationPage2ReadCount": 2,
+  "postsAfterReconciliation": 3,
+  "putStatus": 200,
+  "putRecovery": {
+    "committedTitle": "BK H2 update committed before lost response",
+    "committedStatus": "resolved",
+    "draftPreservedUntilChoice": true,
+    "failedReadStayedBlocked": true,
+    "adoptedSavedVersion": true,
+    "putRequestsForThisFlow": 1
+  },
+  "postsBeforeNoMatch": 3,
+  "countBeforeNoMatch": 22,
+  "noMatchResubmitted": {
+    "id": 23,
+    "title": "BK H2 explicit no-match resubmission",
+    "description": "Steps: Open the synthetic reset form; submit the provided test value.\nExpected: A clear validation message is shown.\nActual: The form continues without validation.",
+    "severity": "Major",
+    "status": "open",
+    "testCaseId": 5,
+    "sourceResultId": 3,
+    "sourceRunId": 1,
+    "createdAt": "2026-11-26T12:37:49.539Z",
+    "updatedAt": "2026-11-26T12:37:49.539Z"
+  },
+  "finalBrowserPosts": 5,
+  "finalBugCountBeforeShutdown": 23,
+  "finalSourceState": [
+    {
+      "id": 1,
+      "result": "passed",
+      "notes": null
+    },
+    {
+      "id": 2,
+      "result": "failed",
+      "notes": "Synthetic source restored after rejection check."
+    },
+    {
+      "id": 3,
+      "result": "failed",
+      "notes": "Synthetic failed source for no-match retry check."
+    }
+  ],
+  "expectedSummary": {
+    "pendingClickAndEnter": "one POST, disabled submit while request pending",
+    "success": "201 persisted with derived result/case/run identity; complete PUT status update persisted",
+    "rejection": "409 after source outcome changed, retained draft, no insert",
+    "lostPost": "server committed 201 then browser response was dropped; no automatic POST; failed GET kept uncertainty; page-2 fresh reconciliation found saved Bug",
+    "lostPut": "server committed update then browser response was dropped; failed GET kept Save blocked; explicit adoption sent no extra PUT",
+    "noMatch": "first POST aborted before server; fresh checks found no row; no retry until explicit duplicate-risk action; exactly one follow-up row"
+  },
+  "expectedConsoleErrors": [
+    "Failed to load resource: the server responded with a status of 409 (Conflict)",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED"
+  ],
+  "unexpectedConsoleErrors": []
+}

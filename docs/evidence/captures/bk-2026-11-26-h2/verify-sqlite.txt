@@ -1,0 +1,5 @@
+
+> qa-management-tool@0.1.0 verify:sqlite
+> node scripts/verify-sqlite.mjs
+
+{"node":"v24.20.0","sqlite":"3.53.4","binding":"node_modules/better-sqlite3/prebuilds/darwin-arm64.node","writeRead":"passed"}

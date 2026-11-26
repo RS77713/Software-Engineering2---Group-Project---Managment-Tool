@@ -1,0 +1,16 @@
+
+> qa-management-tool@0.1.0 build
+> npm run build -w client
+
+npm notice run client@0.0.0 build
+npm notice run vite build
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 59 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.95 kB │ gzip:  0.53 kB
+dist/assets/index-DIlKO1mC.css   20.38 kB │ gzip:  4.64 kB
+dist/assets/index-CtZUKORU.js   319.37 kB │ gzip: 97.16 kB
+
+✓ built in 83ms

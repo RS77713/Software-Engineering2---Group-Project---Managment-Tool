@@ -1,0 +1,8 @@
+
+> qa-management-tool@0.1.0 start:isolated
+> node scripts/start-isolated.mjs
+
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+{"event":"isolated-startup","address":{"address":"127.0.0.1","family":"IPv4","port":63621},"dataDirectory":"/var/folders/qd/svj04r_x0ss6sfjx_sbd5v5h0000gn/T/qa-baseline-isolated-g060Cm","databasePath":"/var/folders/qd/svj04r_x0ss6sfjx_sbd5v5h0000gn/T/qa-baseline-isolated-g060Cm/synthetic.sqlite"}
