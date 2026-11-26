@@ -50,8 +50,14 @@
   "limits": [
     "No browser/client retry/accessibility coverage in this command.",
     "No non-author fresh setup demonstrated by EM's existing-dependency run.",
-    "MK/BK final review and independent journey remain pending.",
+    "At the original 2026-11-25 execution, client final review and BK independent journey were pending; subsequently completed results are linked from H2.md.",
     "No dependency remediation, earlier-history recovery or instructor acceptance claimed."
   ],
-  "checkpointPolicy": "CI/review on this PR identifies the exact delivery revision; this record describes tested changes based on the main SHA above."
+  "checkpointPolicy": "CI/review on this PR identifies the exact delivery revision; this record describes tested changes based on the main SHA above.",
+  "humanExplanationConfirmation": {
+    "date": "2026-11-26",
+    "member": "EM",
+    "scope": "Explicitly confirmed review/understanding and adoption of the assisted explanation: real API plus temporary SQLite check creation, atomic rejected writes, source retention and persistence; not browser/keyboard behaviour or dependency security.",
+    "notClaimed": "No new manual run, inspection of every raw file or unaided explanation."
+  }
 }

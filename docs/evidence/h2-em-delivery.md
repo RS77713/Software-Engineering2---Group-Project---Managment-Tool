@@ -2,7 +2,7 @@
 
 Owner: E.Mihailovskis (`RS77713`). Reviewer: MR (`makss-rivero`).
 Base main: `47848ee8ca23450eb85f90849eca1cbaa95d48ae`.
-**Status:** delivery implementation/checks recorded; MR review, integrated client journey and final H2 evidence remain pending.
+**Status:** delivery approved by MR in [review 6069479000](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/20#pullrequestreview-6069479000) and merged. EM's explanation confirmation is recorded below; final H2 index assessment remains pending.
 
 ## Contribution and rationale
 
@@ -44,4 +44,8 @@ CI retains install/native/lint/tests/build and adds this command. Its checks and
 
 The smoke result demonstrates that the new API persists and retains the right failed execution and that selected rejected operations leave state unchanged. It is a small environment/integration check, not comprehensive requirement coverage. A successful API probe does not establish client draft/retry correctness, keyboard behaviour, an independently reproduced fresh environment or security.
 
-Implementation, command execution and source review were assisted on EM's workspace at EM's request. This record does not assert an unobserved personal manual run or adopted human explanation; record EM's actual human check/decision separately when supplied. MR must review this delivery change. BK still needs the real integrated fresh-environment/client journey and MK's artifact review; H2 remains incomplete until its acceptance evidence is recorded. Existing dependency gate #11 and H1 provenance limits remain in force.
+Implementation, command execution and source review were assisted on EM's workspace at EM's request. MR approved this delivery revision at `749e5d13f68460d58279a294c20174b5a98ff07b`; his review reports a separate fresh Mac setup and smoke/failure/cleanup checks. BK subsequently executed the fresh integrated client/API/SQLite journey at `2b76cd99d4244d98023bcdd3b93ab17d2e3bdd15`, and MK approved the submitted verification evidence in [review 6078036256](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/19#pullrequestreview-6078036256). These outcomes supersede the historical pending tasks, not the explicit assistance/observation limits. See [the updated index](H2.md) for remaining personal-confirmation and final-review scope. Dependency gate #11 and H1 provenance limits remain in force.
+
+## EM's confirmed explanation review — 2026-11-26
+
+EM explicitly confirmed reviewing and understanding the explanation that the smoke command uses real API requests and a separate temporary SQLite database to check Bug creation, rejected writes without state changes, source retention and persistence. EM also confirmed the stated limits: this command does not establish browser/keyboard behaviour or dependency security. This records adoption of the assisted explanation, not a new manual terminal run, independent inspection of every raw file or an unaided answer. Final individual assessment remains for the reviewer/instructor within that actual scope; no repeated confirmation is needed for these unchanged facts.
