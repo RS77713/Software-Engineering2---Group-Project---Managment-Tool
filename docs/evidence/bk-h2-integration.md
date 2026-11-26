@@ -1,6 +1,6 @@
 # BK — H2 integration verification
 
-**Status:** plan prepared; feature integration and independent browser/API/SQLite journey pending. Preliminary client-only checks are recorded below and are not an integrated H2 result.
+**Status:** Independent integrated verification completed at checkpoint `2b76cd99d4244d98023bcdd3b93ab17d2e3bdd15`. The historical client-only checks and earlier review observations remain separately recorded below.
 
 ## Scope and source of expected behaviour
 
@@ -52,4 +52,34 @@ At the user's request, I re-reviewed PR #18 at `428124aa94ccce548394df8caf31768e
 
 Keep raw command logs and database inspection output in the ignored local evidence archive. Publish only selected synthetic screenshots: successful saved Bug with source, uncertain/reconciliation state, and the bounded keyboard validation/focus state. In the final record, include expected vs actual for each attempted case, before/after row counts/IDs and source links, any defect or blocked check, CI/checkpoint links, MK PR/review links, and BK's own explanation and approve/request-changes decision. Attribute observations to the agent; do not present account ownership or an automated review as human verification.
 
-**Still pending:** PR #18 is approved but still open. After its integration into `main`, perform a new supported-runtime setup at the resulting integrated application SHA, then the migration/journey/rejection/pending/uncertain/keyboard checks, browser screenshots and regression suite. The client-only evidence above and MK's author-side browser run must remain separate from BK's fresh independent results. Update this record only with outcomes observed at the cited SHA.
+## Independent integrated verification at PR #18 checkpoint
+
+**Tested application SHA:** `2b76cd99d4244d98023bcdd3b93ab17d2e3bdd15` (PR #18 merge checkpoint). This was a filtered fresh clone in `/private/tmp/bk-h2-checkpoint`, on macOS 27.0 / Darwin arm64, Node `v24.20.0`, npm `11.19.1`. The machine-wide npm was 12.0.2, so every npm invocation used the pinned npm 11.19.1 CLI explicitly. The isolated app listened on `127.0.0.1:63621`; health returned HTTP 200 with `{ "status": "ok" }`. Its disposable database was `/var/folders/qd/svj04r_x0ss6sfjx_sbd5v5h0000gn/T/qa-baseline-isolated-g060Cm/synthetic.sqlite`. The server was stopped before opening that SQLite database directly for the final state checks. No fault hook or proxy remained running.
+
+### Fresh setup and regression results
+
+Commands on the fresh checkout: `npm ci`, `npm run verify:sqlite`, `npm install-scripts ls`, `npm run lint`, `npm test`, `npm run build`, `npm run smoke:h2`, and `PORT=0 npm run start:isolated` (the actual port and database path are recorded above and in the startup log). Install completed with 202 packages added and 205 audited. npm reported **10 vulnerabilities (3 moderate, 4 high, 3 critical)**; they are recorded as unresolved dependency findings, not described as harmless or fixed. `npm install-scripts ls` reported no packages with unreviewed install scripts. SQLite 3.53.4 native write/read, lint and production build passed. The full test command passed **65 client tests + 82 server tests = 147 total**, with zero failures. The H2 smoke command also passed its startup/schema, source-derived create, mismatch rejection/no-write, forbidden transition, retained source/suite deletion, changed source outcome, and SQLite reopen checks. Sandbox loopback restrictions blocked an initial attempt to run socket-based checks; the successful smoke and full test runs were then performed with loopback access enabled. No product-code changes were made for verification.
+
+### Real browser, API and database journey
+
+The browser run used installed Chrome and Playwright against the actual Vite client, isolated API and SQLite database. Inputs and records were synthetic. Before the journey the database held zero Bugs. The seeded source was result `2`, case `2`, run `1`, initially failed.
+
+| Check | Expected | Observed |
+| --- | --- | --- |
+| Create and edit/status | One explicit create persists server-derived source/case/run identity; edit and allowed status change persist without changing source identity or run totals. | Create returned 201 and inserted Bug `#1` (`open`, source result `2`, case `2`, run `1`). Edit plus `open -> in-progress` persisted. The three run results and pass/fail/skip totals remained unchanged; source identity remained fixed. The source result was changed to passed and restored to failed: the Bug still retained its link and displayed the current source outcome separately. |
+| Pending/double submit | Repeated click/Enter during pending produces one POST and disables submit. | One POST; submit was disabled until completion. |
+| Rejected stale source | Rejection keeps draft and does not insert. | After changing the source from failed, create returned 409; draft title remained and Bug count stayed at one. |
+| Lost create response | If the server commits but the response is lost, show uncertainty, do not retry automatically, and reconcile through fresh GETs; selecting a match must not POST again. | The real server returned 201 and committed Bug `#2`; the browser response was then dropped. The page showed unresolved outcome. A failed reconciliation GET left it unresolved. After adding 20 synthetic matching rows to force pagination, two fresh page-2 reads found the committed Bug. Choosing it did not issue another POST. |
+| Lost update response | A committed PUT whose response is lost must remain uncertain until fresh saved data is inspected and explicitly adopted or overwritten. | PUT returned 200 and committed title/status `BK H2 update committed before lost response` / `resolved`; its browser response was dropped. A failed detail read kept Save blocked. A successful read showed saved state against the local draft. Choosing “Use refreshed saved version” sent no second PUT. |
+| No match / explicit retry | Failed pre-commit request is reconciled; no retry until explicit user action. | First POST was aborted before reaching the server. Fresh reads found no match and no automatic retry occurred. Only after explicit duplicate-risk resubmission did exactly one Bug `#23` appear for source result `3`. |
+| Keyboard validation | Enter on an empty form shows accessible validation and focuses an invalid field; bounded Tab traversal reaches the next field. | Enter focused `bug-title`; `aria-invalid=true`, `aria-describedby=error-title`, visible required-title message; next Tab focused `bug-steps`. No POST was sent. |
+
+The server was stopped, then the database was reopened directly. Final state: 23 Bugs (including the two primary create/update/recovery records, 20 synthetic pagination fillers, and the explicit no-match retry record); source links were retained. `PRAGMA foreign_key_check` returned no rows and `PRAGMA integrity_check` returned `ok`. The disposable database was seeded fresh at schema version 1. **No historical database was migrated or migration path tested** in this run; migration compatibility remains unverified and must not be inferred from this fresh-database result.
+
+The browser emitted one expected 409 console entry and `net::ERR_FAILED` entries from deliberately aborted response/read paths. The harness classified these controlled fault observations as expected; there were no uncaught page errors or unexpected console errors. They are not evidence of unrelated browser failures.
+
+### Published evidence
+
+The capture bundle at [`captures/bk-2026-11-26-h2/`](captures/bk-2026-11-26-h2/) contains environment and SHA, setup/install-script/native probe/lint/test/build/smoke/startup logs, the browser runner and structured browser results, the post-shutdown SQLite state and integrity checks, plus six selected synthetic screenshots. Key images: [saved update/source retention](captures/bk-2026-11-26-h2/saved-updated.png), [uncertain create](captures/bk-2026-11-26-h2/uncertain-post.png), [page-two reconciliation](captures/bk-2026-11-26-h2/reconciled-page-two.png), [uncertain update recovery](captures/bk-2026-11-26-h2/uncertain-put-recovery.png), [keyboard validation](captures/bk-2026-11-26-h2/keyboard-validation.png), and [explicit no-match gate](captures/bk-2026-11-26-h2/no-match-explicit-gate.png). This artifact reports only the independent run at the SHA above; the earlier PR #18 client-only results remain distinct.
+
+**PR #19 update/review:** publish this result on the existing `codex/bk-h2-integration` branch and request MK's review again. PR #19 remains unmerged. The evidence is an agent-executed verification, not a claim of human verification or MK approval.
