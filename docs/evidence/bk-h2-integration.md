@@ -1,6 +1,6 @@
 # BK — H2 integration verification
 
-**Status:** plan prepared; feature integration and independent browser/API/SQLite run pending. No H2 journey below is reported as executed.
+**Status:** plan prepared; feature integration and independent browser/API/SQLite journey pending. Preliminary client-only checks are recorded below and are not an integrated H2 result.
 
 ## Scope and source of expected behaviour
 
@@ -28,8 +28,24 @@ Expected create body is `{title, description, severity, sourceResultId: R.id}` w
 4. **Lost response after commit:** with a disposable local response-dropping proxy, forward one real POST to the isolated server, allow it to commit, then drop only its response. Remove/stop the proxy immediately after the observation. Expect the client to retain the original draft/source/time, show uncertainty and send no automatic second POST. Inspect SQLite for exactly one row. Run fresh, unfiltered, paginated source-result GETs followed by candidate detail GETs twice; expect the saved row to be discoverable, and selecting it to open the saved Bug without another POST. Preserve evidence of GET/POST counts and database state.
 5. **No-match and failed-read paths:** when safe to simulate without changing application code, verify a failed reconciliation read leaves uncertainty and disables resubmission; a successful no-match check must also send no POST until the user explicitly chooses the duplicate-risk action. If explicitly resubmitted, record that this is a second user-authorized POST, inspect both resulting rows and report the duplicate-risk outcome accurately. No fault/proxy/test toggle may remain in the final assessed checkpoint.
 
+## Preliminary client-only verification and review
+
+To substantiate the PR #18 client review, I made a fresh worktree at client PR head `91b0de7d1489a5d44062ff2c043c2bd98395b05c` (PR #18, still based on `main` `120d261ec5ba7db7161ee0fd5ba1da85f29113f5`; backend PR #17 is not included). Environment: macOS 27.0, Darwin arm64, Node `v24.20.0`, pinned npm `11.19.1`, SQLite `3.53.4` using `prebuilds/darwin-arm64.node`.
+
+| Command | Observed result |
+| --- | --- |
+| `npx --yes --package npm@11.19.1 npm ci` | Exit 0; added 202 packages, audited 205; npm reported 10 vulnerabilities (3 moderate, 4 high, 3 critical) and an unknown `global-ignore-file` environment-config warning. These warnings are recorded, not treated as harmless or fixed. |
+| `npm run verify:sqlite` | Exit 0; native SQLite write/read passed. |
+| `npm run lint` | Exit 0. |
+| `npm run test -w client` | Exit 0; 11 files, 64 tests passed. |
+| `npm run build` | Exit 0; Vite transformed 59 modules and built production assets. |
+
+Raw output, environment, and tested SHA are in the ignored local archive `docs/evidence/local/2026-11-25/h2-client-review/` in the fresh client-review worktree. No backend test, browser/API journey, SQLite Bug-state inspection, screenshot, or whole-project `npm test` was performed at this pre-integration checkpoint.
+
+I reviewed the actual PR #18 head and submitted [BK's changes-requested review at `91b0de7`](https://github.com/RS77713/Software-Engineering2---Group-Project---Managment-Tool/pull/18#pullrequestreview-6063871333). The new status-label fix and failed-refresh-read test are present. The test still expects a successful detail refresh to unblock save while retaining stale edited fields; it does not model a PUT that committed before its response was lost. The unresolved concern is that refreshing after an uncertain PUT leaves the local draft intact and clears uncertainty, allowing a stale repeat PUT without an explicit reconciliation choice. The focused client suite passed including this test, so green tests do not resolve that finding. This review was submitted by the agent through BK's GitHub identity; it is not represented as human verification.
+
 ## Evidence to capture and review
 
 Keep raw command logs and database inspection output in the ignored local evidence archive. Publish only selected synthetic screenshots: successful saved Bug with source, uncertain/reconciliation state, and the bounded keyboard validation/focus state. In the final record, include expected vs actual for each attempted case, before/after row counts/IDs and source links, any defect or blocked check, CI/checkpoint links, MK PR/review links, and BK's own explanation and approve/request-changes decision. Attribute observations to the agent; do not present account ownership or an automated review as human verification.
 
-**Not yet run:** fresh runtime installation, migration/journey/failure checks, browser screenshots, integrated regression suite, and substantive review of MK's final PR head. Update this record only with outcomes observed at the cited SHA.
+**Still pending:** after the feature is integrated and the requested change is resolved, perform a new supported-runtime setup at the integrated application SHA, then the migration/journey/rejection/pending/uncertain/keyboard checks, browser screenshots and regression suite. The client-only evidence above must remain separate. Update this record only with outcomes observed at the cited SHA.
