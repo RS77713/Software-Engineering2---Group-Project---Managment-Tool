@@ -1,0 +1,190 @@
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
+import { BugDraftProvider } from '../components/BugDrafts.jsx'
+import { descriptionFor, validateBug } from '../components/BugFields.jsx'
+import BugCreatePage from './BugCreatePage.jsx'
+import BugDetailPage from './BugDetailPage.jsx'
+import BugsListPage from './BugsListPage.jsx'
+import TestRunDetailPage from './TestRunDetailPage.jsx'
+import { createBug, getBug, listBugs, reconcileBugs, updateBug } from '../api/bugs.js'
+import { getTestRun, updateTestRunResult } from '../api/test-runs.js'
+vi.mock('../api/bugs.js', async (original) => ({ ...await original(), createBug: vi.fn(), getBug: vi.fn(), listBugs: vi.fn(), reconcileBugs: vi.fn(), updateBug: vi.fn() }))
+vi.mock('../api/test-runs.js', () => ({ getTestRun: vi.fn(), updateTestRunResult: vi.fn() }))
+const bug = { id: 17, title: 'Defect', description: 'Steps: do it\nExpected: works\nActual: fails', severity: 'Major', status: 'open', testCaseId: 3, sourceResultId: 42, sourceRunId: 7, createdAt: '2026-11-25T18:00:00Z', updatedAt: '2026-11-25T18:00:00Z' }
+const run = { id: 7, suiteName: 'Suite', results: [{ id: 42, testCaseId: 3, testCaseTitle: 'Case', result: 'failed', notes: 'Evidence' }] }
+function renderPage(path = '/bugs/new/7/42') {
+  return render(<MemoryRouter initialEntries={[path]}><BugDraftProvider><Routes>
+    <Route path="/bugs/new/:runId/:resultId" element={<BugCreatePage />} />
+    <Route path="/bugs/:id" element={<BugDetailPage />} />
+    <Route path="/bugs" element={<BugsListPage />} />
+    <Route path="/test-runs/:id" element={<TestRunDetailPage />} />
+  </Routes></BugDraftProvider></MemoryRouter>)
+}
+async function fill() {
+  await screen.findByText(/Source result #42/)
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Create Bug' }).disabled).toBe(false))
+  for (const [label, value] of [['Title', ' Defect '], ['Steps to reproduce', 'do it'], ['Expected result', 'works'], ['Actual result', 'fails'], ['Severity', 'Major']]) fireEvent.change(screen.getByLabelText(`${label} (required)`), { target: { value } })
+}
+beforeEach(() => { getTestRun.mockResolvedValue(run); getBug.mockResolvedValue(bug); createBug.mockResolvedValue(bug); listBugs.mockResolvedValue({ items: [], page: 1, totalPages: 1, total: 0 }) })
+afterEach(() => { cleanup(); vi.resetAllMocks() })
+test('opening and marking failed create nothing; failed result entry uses result ID', async () => {
+  updateTestRunResult.mockResolvedValue(run)
+  renderPage('/test-runs/7?resultId=42')
+  const link = await screen.findByRole('link', { name: 'Create Bug' })
+  expect(link.getAttribute('href')).toBe('/bugs/new/7/42')
+  expect(document.activeElement.id).toBe('result-42')
+  fireEvent.click(screen.getByRole('button', { name: 'Failed' }))
+  await waitFor(() => expect(updateTestRunResult).toHaveBeenCalledTimes(1))
+  fireEvent.click(link)
+  await screen.findByRole('heading', { name: 'Create Bug' })
+  expect(createBug).not.toHaveBeenCalled()
+})
+test('validation focuses and associates first error; Unicode boundaries include assembled labels', async () => {
+  renderPage(); await fill()
+  fireEvent.change(screen.getByLabelText('Title (required)'), { target: { value: ' ' } })
+  fireEvent.submit(screen.getByRole('button', { name: 'Create Bug' }).closest('form'))
+  const title = screen.getByLabelText('Title (required)')
+  expect(document.activeElement).toBe(title)
+  expect(title.getAttribute('aria-invalid')).toBe('true')
+  expect(document.getElementById(title.getAttribute('aria-describedby')).textContent).toBe('Enter a title of 1–200 characters.')
+  expect(createBug).not.toHaveBeenCalled()
+  const d = { title: '😀'.repeat(200), steps: 'a', expected: 'b', actual: 'c', severity: 'Major' }
+  d.steps = '😀'.repeat(5000 - descriptionFor(d).length + 1)
+  expect([...descriptionFor(d)].length).toBe(5000)
+  expect(validateBug(d, true)).toEqual({})
+  expect(validateBug({ ...d, title: d.title + 'x', steps: d.steps + 'x' }, true)).toHaveProperty('title')
+  expect(validateBug({ ...d, steps: d.steps + 'x' }, true)).toHaveProperty('steps')
+  expect(validateBug({ ...d, severity: 'wrong', expected: ' ' }, true)).toHaveProperty('severity')
+})
+test('guards repeated form events and opens confirmed saved detail with success', async () => {
+  let resolve
+  createBug.mockReturnValue(new Promise((r) => { resolve = r }))
+  renderPage(); await fill()
+  const form = screen.getByRole('button', { name: 'Create Bug' }).closest('form')
+  fireEvent.submit(form); fireEvent.submit(form)
+  expect(createBug).toHaveBeenCalledTimes(1)
+  expect(createBug).toHaveBeenCalledWith({ title: 'Defect', description: bug.description, severity: 'Major', sourceResultId: 42 })
+  resolve(bug)
+  await screen.findByText('Bug report created successfully.')
+  expect((await screen.findByRole('link', { name: /Source result #42/ })).getAttribute('href')).toBe('/test-runs/7?resultId=42')
+})
+test.each([400, 404, 409])('preserves rejected draft on %s and displays server message', async (status) => {
+  createBug.mockRejectedValue(Object.assign(new Error('Source or field rejected'), { rejected: true, status }))
+  renderPage(); await fill(); fireEvent.click(screen.getByRole('button', { name: 'Create Bug' }))
+  await screen.findByText(/Source or field rejected/)
+  expect(screen.getByLabelText('Title (required)').value).toBe(' Defect ')
+  expect(screen.getByRole('button', { name: 'Create Bug' }).disabled).toBe(false)
+})
+test('uncertainty retains original payload across candidate navigation, failed reads and explicit resubmission', async () => {
+  createBug.mockRejectedValue(new Error('lost'))
+  reconcileBugs.mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce([{ bug, matches: true }, { bug: { ...bug, id: 18 }, matches: true }]).mockResolvedValue([])
+  renderPage(); await fill(); fireEvent.click(screen.getByRole('button', { name: 'Create Bug' }))
+  await screen.findByText(/The bug may have been saved/)
+  expect(screen.getByRole('button', { name: 'Create Bug' }).disabled).toBe(true)
+  fireEvent.change(screen.getByLabelText('Title (required)'), { target: { value: 'Edited draft' } })
+  fireEvent.click(screen.getByRole('button', { name: 'Check existing bugs' }))
+  await screen.findByText(/Read failed: offline/)
+  expect(screen.queryByRole('button', { name: /submit again despite/ })).toBe(null)
+  fireEvent.click(screen.getByRole('button', { name: 'Check existing bugs' }))
+  fireEvent.click(await screen.findByRole('link', { name: '#17 Defect' }))
+  await screen.findByRole('heading', { name: 'Bug #17' })
+  fireEvent.click(screen.getByRole('link', { name: 'Return to retained draft' }))
+  expect(screen.getByLabelText('Title (required)').value).toBe('Edited draft')
+  expect(createBug).toHaveBeenCalledTimes(1)
+  fireEvent.click(screen.getByRole('button', { name: 'Check existing bugs' }))
+  await screen.findByText('No existing bugs found.')
+  expect(reconcileBugs.mock.calls[2][0].payload.title).toBe('Defect')
+  expect(createBug).toHaveBeenCalledTimes(1)
+  createBug.mockResolvedValue(bug)
+  fireEvent.click(screen.getByRole('button', { name: /submit again despite duplicate risk/ }))
+  await screen.findByText('Bug report created successfully.')
+  expect(createBug).toHaveBeenCalledTimes(2)
+  expect(createBug.mock.calls[1][0].title).toBe('Edited draft')
+})
+test('complete update retains linked case and omits source fields; shows rejection and saved update', async () => {
+  updateBug.mockRejectedValueOnce(Object.assign(new Error('Transition rejected'), { rejected: true })).mockResolvedValue({ ...bug, title: 'Edited', status: 'in-progress' })
+  renderPage('/bugs/17')
+  await screen.findByLabelText('Title (required)')
+  await screen.findByText(/Current source outcome: failed/)
+  fireEvent.change(screen.getByLabelText('Title (required)'), { target: { value: 'Edited' } })
+  fireEvent.change(screen.getByLabelText('Status'), { target: { value: 'in-progress' } })
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await screen.findByText('Transition rejected')
+  expect(updateBug).toHaveBeenCalledWith('17', { title: 'Edited', description: bug.description, severity: 'Major', status: 'in-progress', testCaseId: 3 })
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await screen.findByText('Bug changes saved successfully.')
+})
+test('list read failure can be refreshed to empty state', async () => {
+  listBugs.mockRejectedValueOnce(new Error('offline')).mockResolvedValue({ items: [], page: 1, totalPages: 1, total: 0 })
+  renderPage('/bugs')
+  await screen.findByText('Read failed: offline')
+  fireEvent.click(screen.getByRole('button', { name: 'Refresh bugs' }))
+  await screen.findByText('No bugs found.')
+})
+test('uncertain PUT blocks another write until fresh detail read and retains edited draft', async () => {
+  updateBug.mockRejectedValue(new Error('lost update response'))
+  renderPage('/bugs/17')
+  await screen.findByLabelText('Title (required)')
+  fireEvent.change(screen.getByLabelText('Title (required)'), { target: { value: 'Retain update draft' } })
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await screen.findByText(/The update may have been saved/)
+  expect(screen.getByRole('button', { name: 'Save changes' }).disabled).toBe(true)
+  getBug.mockRejectedValueOnce(new Error('offline'))
+  fireEvent.click(screen.getByRole('button', { name: 'Refresh saved details (keep draft)' }))
+  await screen.findByText('Read failed: offline')
+  expect(screen.getByRole('button', { name: 'Save changes' }).disabled).toBe(true)
+  fireEvent.click(screen.getByRole('button', { name: 'Refresh saved details (keep draft)' }))
+  await screen.findByRole('button', { name: 'Use refreshed saved version' })
+  expect(screen.getByRole('button', { name: 'Save changes' }).disabled).toBe(true)
+  expect(screen.getByLabelText('Title (required)').value).toBe('Retain update draft')
+  expect(updateBug).toHaveBeenCalledTimes(1)
+  fireEvent.click(screen.getByRole('button', { name: 'Keep my draft — allow an explicit overwrite' }))
+  expect(screen.getByRole('button', { name: 'Save changes' }).disabled).toBe(false)
+  expect(updateBug).toHaveBeenCalledTimes(1)
+  updateBug.mockResolvedValue({ ...bug, title: 'Retain update draft' })
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await screen.findByText('Bug changes saved successfully.')
+  expect(updateBug).toHaveBeenCalledTimes(2)
+})
+test('committed PUT with lost response requires explicit adoption of fresh server version', async () => {
+  updateBug.mockImplementation(async () => {
+    getBug.mockResolvedValue({ ...bug, title: 'Committed update', status: 'in-progress' })
+    throw new Error('response lost after commit')
+  })
+  renderPage('/bugs/17')
+  await screen.findByLabelText('Title (required)')
+  fireEvent.change(screen.getByLabelText('Title (required)'), { target: { value: 'Committed update' } })
+  fireEvent.change(screen.getByLabelText('Status'), { target: { value: 'in-progress' } })
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await screen.findByText(/The update may have been saved/)
+  // A subsequent local edit must not be silently sent over the committed version.
+  fireEvent.change(screen.getByLabelText('Title (required)'), { target: { value: 'Later unsaved draft' } })
+  fireEvent.click(screen.getByRole('button', { name: 'Refresh saved details (keep draft)' }))
+  await screen.findByRole('button', { name: 'Use refreshed saved version' })
+  expect(screen.getByRole('heading', { name: 'Committed update' })).toBeTruthy()
+  expect(screen.getByLabelText('Title (required)').value).toBe('Later unsaved draft')
+  expect(screen.getByRole('button', { name: 'Save changes' }).disabled).toBe(true)
+  fireEvent.submit(screen.getByRole('button', { name: 'Save changes' }).closest('form'))
+  expect(updateBug).toHaveBeenCalledTimes(1)
+  fireEvent.click(screen.getByRole('button', { name: 'Use refreshed saved version' }))
+  expect(screen.getByLabelText('Title (required)').value).toBe('Committed update')
+  expect(screen.getByLabelText('Status').value).toBe('in-progress')
+  expect(updateBug).toHaveBeenCalledTimes(1)
+})
+test('failed initial detail read can recover and source read failure remains visible', async () => {
+  getBug.mockRejectedValueOnce(new Error('detail unavailable'))
+  renderPage('/bugs/17')
+  await screen.findByText('Read failed: detail unavailable')
+  getTestRun.mockRejectedValue(new Error('source unavailable'))
+  fireEvent.click(screen.getByRole('button', { name: 'Refresh saved details (keep draft)' }))
+  await screen.findByText(/Source read failed: source unavailable/)
+  expect(screen.getByRole('link', { name: /Source result #42/ })).toBeTruthy()
+})
+test('missing source prevents submission and offers refresh', async () => {
+  getTestRun.mockResolvedValue({ ...run, results: [] })
+  renderPage()
+  await screen.findByText('The selected test result was not found.')
+  expect(screen.getByRole('button', { name: 'Create Bug' }).disabled).toBe(true)
+  expect(createBug).not.toHaveBeenCalled()
+})

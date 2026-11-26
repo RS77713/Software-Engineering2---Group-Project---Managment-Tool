@@ -18,7 +18,7 @@ describe('App baseline navigation', () => {
     vi.unstubAllGlobals()
   })
 
-  test('renders the home page and the five baseline navigation links', async () => {
+  test('renders the home page and the baseline and Bug navigation links', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <App />
@@ -26,19 +26,19 @@ describe('App baseline navigation', () => {
     )
 
     await screen.findByRole('heading', { name: 'QA Management Tool' })
-    for (const name of ['Home', 'Dashboard', 'Test Cases', 'Test Suites', 'Test Runs']) {
+    for (const name of ['Home', 'Dashboard', 'Test Cases', 'Test Suites', 'Test Runs', 'Bugs']) {
       expect(screen.getByRole('link', { name })).toBeTruthy()
     }
   })
 
-  test('does not advertise functionality outside the agreed baseline', () => {
+  test('does not advertise functionality outside the agreed scope', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <App />
       </MemoryRouter>
     )
 
-    for (const name of ['Settings', 'Bugs', 'Reports', 'Flaky Tests']) {
+    for (const name of ['Settings', 'Reports', 'Flaky Tests']) {
       expect(screen.queryByRole('link', { name })).toBeNull()
     }
   })

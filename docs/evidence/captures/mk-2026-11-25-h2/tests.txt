@@ -1,0 +1,115 @@
+
+> qa-management-tool@0.1.0 test
+> npm run test -w client && npm run test -w server
+
+
+> client@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.0 /home/dizzywaters/Programming/TSI/Software_En/Lab/Software-Engineering2---Group-Project---Managment-Tool/client
+
+
+ Test Files  11 passed (11)
+      Tests  65 passed (65)
+   Start at  21:44:52
+   Duration  9.44s (environment 56%, tests 31%, import 9%, transform 4%)
+
+Environment  jsdom was created 11 times · 14.17s total, 56% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+
+> server@0.1.0 test
+> node --test test/*.test.js
+
+✔ parses a simple header + data rows, unquoted (4.650303ms)
+✔ row numbers start at 2 for the first data row (header is row 1) (0.41717ms)
+✔ a quoted field may contain a comma (0.595776ms)
+✔ a quoted field may contain embedded newlines (multiline steps), counted as one row (0.41384ms)
+✔ a doubled quote ("") inside a quoted field is an escaped literal quote (0.345106ms)
+✔ CRLF line endings are handled the same as LF (0.388571ms)
+✔ a leading UTF-8 BOM is stripped, and non-ASCII content is preserved (0.868675ms)
+✔ a file with no trailing newline still captures its last row (0.380225ms)
+✔ fully blank lines are skipped entirely — not counted as a row, and row numbers stay contiguous (0.473612ms)
+✔ a row with a different column count than the header is still returned as-is — the caller decides what to do with it (0.506143ms)
+✔ an unterminated quoted field throws a CsvParseError instead of silently swallowing the rest of the file (1.102905ms)
+✔ a completely empty file throws a CsvParseError (1.682527ms)
+✔ a file containing only blank lines throws a CsvParseError (no header row exists) (0.33164ms)
+✔ formatCsvField leaves a plain value unquoted (0.382369ms)
+✔ formatCsvField quotes a value containing a comma, a quote, or a line break, and doubles internal quotes (0.684869ms)
+✔ formatCsvField turns null/undefined into an empty (unquoted) field (0.240063ms)
+✔ stringifyCsv round-trips through parseCsv: commas, quotes, multiline steps, and UTF-8 all survive exactly (1.574062ms)
+✔ stringifyCsv with zero rows still produces a valid, parseable header-only document (0.28547ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ an empty database returns stable zero-data dashboard contracts (59.692928ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ dashboard metrics summarize the core workflow (121.889892ms)
+✔ dashboard trends contain pass-rate and every test-case status bucket (9.466431ms)
+✔ isolated startup binds loopback and uses fresh synthetic data despite inherited environment (421.69378ms)
+ℹ {"actualBoundAddress":{"address":"127.0.0.1","family":"IPv4","port":33817},"freshSyntheticDatabase":true,"seededCases":5,"inheritedDatabasePreserved":true}
+✔ isolated startup rejects an out-of-range port before starting the application (80.720965ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ PUT /api/suites/:id preserves status when the request omits it (241.718047ms)
+✔ deleting a test case is discoverable as removing it from its suites (93.322011ms)
+✔ an error passed to next() (e.g. malformed JSON) still gets the {success,data,error} shape (8.822746ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ the response is a downloadable text/csv file with a dated filename (67.562334ms)
+✔ headers are exactly the columns requested, in order, and are compatible with CSV import (22.867927ms)
+✔ an empty result set still exports just the header row, as a valid CSV (22.565823ms)
+✔ the export honors the active status filter, matching the list endpoint (69.852024ms)
+✔ the export honors the active search filter, matching the list endpoint (29.070902ms)
+✔ the export honors the current sort/order, matching the list endpoint (severity, ascending) (30.271202ms)
+✔ with no sort param at all, the export defaults to id ascending (creation order, newest last), matching the list default (46.401248ms)
+✔ the export still honors an explicitly chosen updatedAt sort, overriding the id default (24.094666ms)
+✔ the export includes every matching row, not just one page worth (beyond PAGE_SIZE=20) (106.400732ms)
+✔ commas, double quotes, multi-line steps, and UTF-8 all survive the export/import round trip exactly (8.027546ms)
+✔ a re-import of the exported CSV recognizes its headers and reports every row as an existing duplicate (13.145664ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ the response envelope follows { success, data, error }, with totalRows/committed/rows/summary (85.781551ms)
+✔ missing csv in the request body is rejected (8.524883ms)
+✔ a header missing any of title/severity/steps/expected_result rejects the whole file, before any row is processed (24.456332ms)
+✔ expected_result is also accepted spelled expectedResult or "expected result" (18.437872ms)
+✔ a duplicate header column is rejected as a whole-file error (10.971296ms)
+✔ preview (commit: false) never writes anything, even for an entirely valid file (39.016938ms)
+✔ commit inserts only valid, non-duplicate rows, and the created row matches the CSV (including multi-line steps) (9.16703ms)
+✔ status defaults to draft and preconditions to null when their columns are absent, matching the manual form (9.095576ms)
+✔ a row missing the title-bracket feature area, an invalid severity, or no steps reuses the exact validator messages, unmodified (7.224093ms)
+✔ expected_result: a missing header rejects the whole file, but a present-and-blank cell only invalidates that one row (18.729819ms)
+✔ a structurally malformed file (an unterminated quoted field) is rejected as a whole-file error, and writes nothing (7.673296ms)
+✔ a row with the wrong number of columns is reported as invalid for that row, not silently misaligned (3.227217ms)
+✔ fully blank lines anywhere in the file are skipped — not counted as a row, and not an error (5.939325ms)
+✔ two rows in the same file sharing a title: the first is importable, the second is reported as a duplicate of it and skipped (8.090166ms)
+✔ a title that already exists in the database is reported as a duplicate and skipped, never overwritten (12.449607ms)
+✔ commit re-checks duplicates against live data, not a stale earlier preview (15.321778ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ GET /api/test-cases with no sort/order params at all defaults to id ascending (creation order, newest last) (70.38403ms)
+✔ explicitly sorting by updatedAt (desc) still works exactly as before, overriding the id default (28.945226ms)
+✔ explicitly sorting by severity still works exactly as before, overriding the id default (15.507872ms)
+✔ the id default combines correctly with an active status filter (13.816291ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ creating a run snapshots the suite cases (112.295269ms)
+✔ result updates maintain totals and automatically complete the run (13.433733ms)
+✔ invalid execution input returns a useful failure response (4.996514ms)
+ℹ tests 60
+ℹ suites 0
+ℹ pass 60
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1750.895292

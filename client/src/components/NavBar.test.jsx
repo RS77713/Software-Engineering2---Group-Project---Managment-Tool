@@ -18,12 +18,12 @@ function isActive(name) {
 describe('NavBar', () => {
   afterEach(cleanup)
 
-  test('renders only baseline sections', () => {
+  test('renders baseline and implemented Bug sections', () => {
     renderNav()
-    for (const name of ['Home', 'Dashboard', 'Test Cases', 'Test Suites', 'Test Runs']) {
+    for (const name of ['Home', 'Dashboard', 'Test Cases', 'Test Suites', 'Test Runs', 'Bugs']) {
       expect(screen.getByRole('link', { name })).toBeTruthy()
     }
-    for (const name of ['Settings', 'Bugs', 'Reports', 'Flaky Tests']) {
+    for (const name of ['Settings', 'Reports', 'Flaky Tests']) {
       expect(screen.queryByRole('link', { name })).toBeNull()
     }
   })

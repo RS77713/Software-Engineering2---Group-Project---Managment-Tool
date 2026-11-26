@@ -1,0 +1,46 @@
+{
+  "databasePath": "/tmp/qa-baseline-isolated-RhYuT9/synthetic.sqlite",
+  "closedServerBeforeReopen": true,
+  "count": 24,
+  "selectedRecords": [
+    {
+      "id": 1,
+      "title": "H2 real UI defect — reviewed details",
+      "description": "Steps: Open reset flow\nExpected: Reset email arrives\nActual: No reset email",
+      "severity": "Major",
+      "status": "open",
+      "test_case_id": 2,
+      "source_result_id": 2,
+      "created_at": "2026-11-25T19:45:07.140Z",
+      "updated_at": "2026-11-25T19:45:07.544Z"
+    },
+    {
+      "id": 2,
+      "title": "H2 committed response lost",
+      "description": "Steps: Submit once\nExpected: Saved response\nActual: Transport interrupted",
+      "severity": "Minor",
+      "status": "open",
+      "test_case_id": 2,
+      "source_result_id": 2,
+      "created_at": "2026-11-25T19:45:08.124Z",
+      "updated_at": "2026-11-25T19:45:08.124Z"
+    },
+    {
+      "id": 24,
+      "title": "H2 deliberate retained draft overwrite",
+      "description": "Steps: Submit once\nExpected: Report saved\nActual: Connection failed",
+      "severity": "Major",
+      "status": "in-progress",
+      "test_case_id": 2,
+      "source_result_id": 2,
+      "created_at": "2026-11-25T19:45:10.011Z",
+      "updated_at": "2026-11-25T19:45:10.860Z"
+    }
+  ],
+  "foreignKeyCheck": [],
+  "integrityCheck": [
+    {
+      "integrity_check": "ok"
+    }
+  ]
+}

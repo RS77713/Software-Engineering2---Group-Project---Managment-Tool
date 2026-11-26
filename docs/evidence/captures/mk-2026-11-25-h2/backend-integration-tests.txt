@@ -1,0 +1,132 @@
+
+> server@0.1.0 test
+> node --test test/*.test.js
+
+✔ a consistent earlier-data copy upgrades without changing inherited rows, IDs, schema or sequences (370.947489ms)
+✔ a fresh database initializes all tables and the second startup is a no-op (233.349717ms)
+✔ a failed 0-to-1 migration rolls back DDL and version changes and stops startup (272.186624ms)
+✔ unsupported schema versions stop startup without creating or changing tables or data (408.983067ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ standalone creation trims text, retains internal whitespace, allows duplicates and persists (124.543193ms)
+✔ source creation uses result identity and derives the case/run, with no implicit creation or deduplication (28.472073ms)
+✔ missing, mismatched and no-longer-failed sources reject without insertion (49.072768ms)
+✔ write transaction observes another writer changing or deleting the source before validation (838.282799ms)
+✔ creation rejects missing, mistyped, read-only and unknown fields with no writes (187.679338ms)
+✔ Unicode code-point boundaries include non-BMP characters and embedded NUL (54.730952ms)
+✔ JSON/media/size errors and unexpected database failures use the failure envelope (38.235009ms)
+✔ detail IDs are strict decimal safe integers; unsupported operations do not delete or modify (74.496014ms)
+✔ every lifecycle edge validates the stored state and failed edits preserve all fields and timestamps (137.665867ms)
+✔ complete PUT requires all fields, prohibits source/read-only fields and clears omitted standalone links (62.884744ms)
+✔ source identity remains immutable across PUT and later outcome/notes edits (52.902283ms)
+✔ source retention blocks suite/run/result deletion atomically, including after closure (29.970193ms)
+✔ unreferenced suite deletion and standalone test-case unlink retain inherited behaviour (15.536109ms)
+SqliteError: synthetic unrelated failure
+    at sqliteTransaction.<anonymous> (file:///tmp/mk-h2-integration/server/routes/suites.js:146:51)
+    at sqliteTransaction (/home/dizzywaters/Programming/TSI/Software_En/Lab/Software-Engineering2---Group-Project---Managment-Tool/node_modules/better-sqlite3/lib/methods/transaction.js:65:24)
+    at handleDeleteSuite (file:///tmp/mk-h2-integration/server/routes/suites.js:148:6)
+    at Layer.handle [as handle_request] (/home/dizzywaters/Programming/TSI/Software_En/Lab/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/dizzywaters/Programming/TSI/Software_En/Lab/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/dizzywaters/Programming/TSI/Software_En/Lab/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/dizzywaters/Programming/TSI/Software_En/Lab/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/layer.js:95:5)
+    at /home/dizzywaters/Programming/TSI/Software_En/Lab/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/index.js:284:15
+    at param (/home/dizzywaters/Programming/TSI/Software_En/Lab/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/index.js:365:14)
+    at param (/home/dizzywaters/Programming/TSI/Software_En/Lab/Software-Engineering2---Group-Project---Managment-Tool/node_modules/express/lib/router/index.js:376:14) {
+  code: 'SQLITE_CONSTRAINT_TRIGGER'
+}
+✔ unrelated suite database failures stay 500 and roll back instead of becoming a retention conflict (7.84426ms)
+✔ list filters, deterministic sorting and pagination support later-page reconciliation without writes (210.995157ms)
+✔ search is literal, ASCII-case-insensitive and preserves the complete query string (29.279974ms)
+✔ all severity ranks and timestamp sort directions use ascending IDs for ties (40.942439ms)
+✔ invalid, repeated and unknown list parameters reject instead of being ignored (44.263281ms)
+✔ parses a simple header + data rows, unquoted (6.431533ms)
+✔ row numbers start at 2 for the first data row (header is row 1) (0.771444ms)
+✔ a quoted field may contain a comma (0.848201ms)
+✔ a quoted field may contain embedded newlines (multiline steps), counted as one row (0.485602ms)
+✔ a doubled quote ("") inside a quoted field is an escaped literal quote (0.842631ms)
+✔ CRLF line endings are handled the same as LF (0.699464ms)
+✔ a leading UTF-8 BOM is stripped, and non-ASCII content is preserved (0.739816ms)
+✔ a file with no trailing newline still captures its last row (0.444039ms)
+✔ fully blank lines are skipped entirely — not counted as a row, and row numbers stay contiguous (1.407407ms)
+✔ a row with a different column count than the header is still returned as-is — the caller decides what to do with it (1.420428ms)
+✔ an unterminated quoted field throws a CsvParseError instead of silently swallowing the rest of the file (1.794379ms)
+✔ a completely empty file throws a CsvParseError (1.398855ms)
+✔ a file containing only blank lines throws a CsvParseError (no header row exists) (0.416782ms)
+✔ formatCsvField leaves a plain value unquoted (0.424636ms)
+✔ formatCsvField quotes a value containing a comma, a quote, or a line break, and doubles internal quotes (0.284618ms)
+✔ formatCsvField turns null/undefined into an empty (unquoted) field (0.217426ms)
+✔ stringifyCsv round-trips through parseCsv: commas, quotes, multiline steps, and UTF-8 all survive exactly (0.811542ms)
+✔ stringifyCsv with zero rows still produces a valid, parseable header-only document (0.574375ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ an empty database returns stable zero-data dashboard contracts (60.264908ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ dashboard metrics summarize the core workflow (139.041538ms)
+✔ dashboard trends contain pass-rate and every test-case status bucket (12.456998ms)
+✔ isolated startup binds loopback and uses fresh synthetic data despite inherited environment (622.590558ms)
+ℹ {"actualBoundAddress":{"address":"127.0.0.1","family":"IPv4","port":44717},"freshSyntheticDatabase":true,"seededCases":5,"inheritedDatabasePreserved":true}
+✔ isolated startup rejects an out-of-range port before starting the application (175.104791ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ PUT /api/suites/:id preserves status when the request omits it (213.527794ms)
+✔ deleting a test case is discoverable as removing it from its suites (84.951959ms)
+✔ an error passed to next() (e.g. malformed JSON) still gets the {success,data,error} shape (13.050391ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ the response is a downloadable text/csv file with a dated filename (78.53739ms)
+✔ headers are exactly the columns requested, in order, and are compatible with CSV import (18.063925ms)
+✔ an empty result set still exports just the header row, as a valid CSV (25.153658ms)
+✔ the export honors the active status filter, matching the list endpoint (65.956272ms)
+✔ the export honors the active search filter, matching the list endpoint (38.098879ms)
+✔ the export honors the current sort/order, matching the list endpoint (severity, ascending) (81.55408ms)
+✔ with no sort param at all, the export defaults to id ascending (creation order, newest last), matching the list default (21.774084ms)
+✔ the export still honors an explicitly chosen updatedAt sort, overriding the id default (41.720687ms)
+✔ the export includes every matching row, not just one page worth (beyond PAGE_SIZE=20) (175.994665ms)
+✔ commas, double quotes, multi-line steps, and UTF-8 all survive the export/import round trip exactly (6.593298ms)
+✔ a re-import of the exported CSV recognizes its headers and reports every row as an existing duplicate (10.732667ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ the response envelope follows { success, data, error }, with totalRows/committed/rows/summary (92.911978ms)
+✔ missing csv in the request body is rejected (19.056135ms)
+✔ a header missing any of title/severity/steps/expected_result rejects the whole file, before any row is processed (61.053649ms)
+✔ expected_result is also accepted spelled expectedResult or "expected result" (17.674324ms)
+✔ a duplicate header column is rejected as a whole-file error (12.648713ms)
+✔ preview (commit: false) never writes anything, even for an entirely valid file (55.707129ms)
+✔ commit inserts only valid, non-duplicate rows, and the created row matches the CSV (including multi-line steps) (21.606333ms)
+✔ status defaults to draft and preconditions to null when their columns are absent, matching the manual form (10.907066ms)
+✔ a row missing the title-bracket feature area, an invalid severity, or no steps reuses the exact validator messages, unmodified (5.987282ms)
+✔ expected_result: a missing header rejects the whole file, but a present-and-blank cell only invalidates that one row (21.926613ms)
+✔ a structurally malformed file (an unterminated quoted field) is rejected as a whole-file error, and writes nothing (10.727561ms)
+✔ a row with the wrong number of columns is reported as invalid for that row, not silently misaligned (4.873915ms)
+✔ fully blank lines anywhere in the file are skipped — not counted as a row, and not an error (5.289308ms)
+✔ two rows in the same file sharing a title: the first is importable, the second is reported as a duplicate of it and skipped (10.88214ms)
+✔ a title that already exists in the database is reported as a duplicate and skipped, never overwritten (14.673389ms)
+✔ commit re-checks duplicates against live data, not a stale earlier preview (16.97524ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ GET /api/test-cases with no sort/order params at all defaults to id ascending (creation order, newest last) (241.029986ms)
+✔ explicitly sorting by updatedAt (desc) still works exactly as before, overriding the id default (78.761965ms)
+✔ explicitly sorting by severity still works exactly as before, overriding the id default (31.760705ms)
+✔ the id default combines correctly with an active status filter (18.021885ms)
+Seeded 5 test cases.
+Seeded 2 test suites.
+Seeded 1 test run.
+✔ creating a run snapshots the suite cases (134.535642ms)
+✔ result updates maintain totals and automatically complete the run (13.787814ms)
+✔ invalid execution input returns a useful failure response (5.380628ms)
+ℹ tests 82
+ℹ suites 0
+ℹ pass 82
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3736.82755

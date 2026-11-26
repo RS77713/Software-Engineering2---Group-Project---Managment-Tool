@@ -1,3 +1,7 @@
+import { BugDraftProvider } from './components/BugDrafts.jsx'
+import BugCreatePage from './pages/BugCreatePage.jsx'
+import BugsListPage from './pages/BugsListPage.jsx'
+import BugDetailPage from './pages/BugDetailPage.jsx'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/NavBar.jsx'
@@ -15,9 +19,12 @@ import TestSuitesListPage from './pages/TestSuitesListPage.jsx'
 
 function App() {
   return (
-    <>
+    <BugDraftProvider>
       <NavBar />
       <Routes>
+        <Route path="/bugs" element={<BugsListPage />} />
+        <Route path="/bugs/new/:runId/:resultId" element={<BugCreatePage />} />
+        <Route path="/bugs/:id" element={<BugDetailPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/test-cases" element={<TestCasesListPage />} />
@@ -31,7 +38,7 @@ function App() {
         <Route path="/test-runs" element={<TestRunsListPage />} />
         <Route path="/test-runs/:id" element={<TestRunDetailPage />} />
       </Routes>
-    </>
+    </BugDraftProvider>
   )
 }
 
