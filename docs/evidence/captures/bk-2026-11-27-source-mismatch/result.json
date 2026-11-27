@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-27",
+  "testedSha": "2b76cd99d4244d98023bcdd3b93ab17d2e3bdd15",
+  "command": "node docs/evidence/local/2026-11-27/bounded-check/check.mjs",
+  "base": "http://127.0.0.1:55591",
+  "health": {
+    "status": 200,
+    "body": {
+      "success": true,
+      "data": {
+        "status": "ok"
+      },
+      "error": null
+    }
+  },
+  "before": {
+    "status": 200,
+    "body": {
+      "success": true,
+      "data": {
+        "items": [],
+        "page": 1,
+        "pageSize": 20,
+        "total": 0,
+        "totalPages": 1
+      },
+      "error": null
+    }
+  },
+  "post": {
+    "status": 400,
+    "body": {
+      "success": false,
+      "data": null,
+      "error": "testCaseId must match the source result"
+    }
+  },
+  "after": {
+    "status": 200,
+    "body": {
+      "success": true,
+      "data": {
+        "items": [],
+        "page": 1,
+        "pageSize": 20,
+        "total": 0,
+        "totalPages": 1
+      },
+      "error": null
+    }
+  }
+}
