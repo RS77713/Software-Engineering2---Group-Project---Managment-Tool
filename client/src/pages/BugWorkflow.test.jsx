@@ -33,7 +33,7 @@ test('opening and marking failed create nothing; failed result entry uses result
   renderPage('/test-runs/7?resultId=42')
   const link = await screen.findByRole('link', { name: 'Create Bug' })
   expect(link.getAttribute('href')).toBe('/bugs/new/7/42')
-  expect(document.activeElement.id).toBe('result-42')
+  await waitFor(() => expect(document.activeElement.id).toBe('result-42'))
   fireEvent.click(screen.getByRole('button', { name: 'Failed' }))
   await waitFor(() => expect(updateTestRunResult).toHaveBeenCalledTimes(1))
   fireEvent.click(link)
